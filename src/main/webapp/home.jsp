@@ -3,7 +3,7 @@
   Date: 04/09/2015
   Time: 10:48 PM
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
   <%String user = request.getParameter("username");%>
 <head>
@@ -67,7 +67,9 @@
   <h1>File Upload!</h1>
   <form id ="form" action="UploadFiles" method="POST" enctype="multipart/form-data" class="form-control-static">
     <div class="row" align="center" style="text-overflow: ellipsis;">
-      <input type="hidden"  name="user" id="user" value= <%= user %> />
+
+      Hola <%= user%>
+      <input type="hidden"  name="username" id="username" value= <%= user %> />
       <input type="file"  name="file" id="file" accept="audio/mp3, audio/wav, image/png, image/jpeg, image/jpg,
                                                                           image/bmp, video/mp4, video/webm, application/pdf, text/html"/>
     </div>

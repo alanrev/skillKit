@@ -34,9 +34,10 @@ public class AuthenticationServlet extends HttpServlet {
                 String ip = request.getRemoteAddr();
                 Node authenticatedNode = authenticate(username, password, ip);
                 if (authenticatedNode != null) {
-                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "home.jsp" + EXCLAMATION_MARK + username);
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "home.jsp" + EXCLAMATION_MARK + USERNAME_KEY
+                            + EQUAL_KEY+ username);
                 } else {
-                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error1");
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=1");
                 }
             }else{
                 response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=2");
@@ -67,6 +68,7 @@ public class AuthenticationServlet extends HttpServlet {
                         Node sessions = rootNode.addNode(SKILLKIT_SESSIONS_PATH);
                         Node session = sessions.addNode(username + DASH + ip);
                     }
+                    jcrSession.save();
                 } catch (RepositoryException e) {
                     e.printStackTrace();
                     System.out.print("error en el repo");
@@ -131,7 +133,7 @@ public class AuthenticationServlet extends HttpServlet {
             /**
              * using the url lolahost:8080 where is up the jackrabbit repository
              */
-            String url = "http://intern5.xumak.gt:8080/rmi";
+
             Repository repository =
                     new URLRemoteRepository("http://localhost:8080/rmi");
             /**

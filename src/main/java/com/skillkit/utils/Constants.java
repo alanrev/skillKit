@@ -19,6 +19,7 @@ public class Constants {
     public static final String SLASH = "/";
     public static final String DASH = "-";
     public static final String EXCLAMATION_MARK = "?";
+    public static final String EQUAL_KEY = "=";
 
 
     //users constants
