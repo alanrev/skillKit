@@ -74,7 +74,7 @@
 <div class="container" align="center">
   <h1>File Upload!</h1>
   <form id ="form" action="UploadFiles" method="POST" enctype="multipart/form-data" class="form-control-static">
-    File:
+    hola
     <div class="row" align="center" style="text-overflow: ellipsis;">
       <input type="hidden"  name="user" id="user" value= <%= user %> />
       <input type="file"  name="file" id="file" accept="audio/mp3, audio/wav, image/png, image/jpeg, image/jpg,
