@@ -27,14 +27,20 @@ public class AuthenticationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // reading the user input
-        String username = request.getParameter(USERNAME_KEY);
-        String password = request.getParameter(PASSWORD_KEY);
-        String ip = request.getRemoteAddr();
-        Node authenticatedNode = authenticate(username, password, ip);
-       if (authenticatedNode != null) {
-           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH +"home.jsp" + EXCLAMATION_MARK +username);
-       } else {
-           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp");
+        if ((request != null) && (response != null)) {
+            String username = request.getParameter(USERNAME_KEY);
+            String password = request.getParameter(PASSWORD_KEY);
+            if (!((username.isEmpty()) &&(password.isEmpty()))) {
+                String ip = request.getRemoteAddr();
+                Node authenticatedNode = authenticate(username, password, ip);
+                if (authenticatedNode != null) {
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "home.jsp" + EXCLAMATION_MARK + username);
+                } else {
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error1");
+                }
+            }else{
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=2");
+            }
         }
     }
 
