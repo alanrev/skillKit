@@ -1,6 +1,5 @@
 package com.skillkit.servlets;
 
-import org.apache.jackrabbit.commons.JcrUtils;
 
 import javax.jcr.*;
 import javax.servlet.ServletException;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 
 import static com.skillkit.utils.Constants.*;
@@ -31,15 +29,44 @@ public class AuthenticationServlet extends HttpServlet {
         // reading the user input
         String username = request.getParameter(USERNAME_KEY);
         String password = request.getParameter(PASSWORD_KEY);
-        Node authenticatedNode = authenticate(username, password);
+        String ip = request.getRemoteAddr();
+        Node authenticatedNode = authenticate(username, password, ip);
        if (authenticatedNode != null) {
-           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp");
+           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH +"home.jsp" + EXCLAMATION_MARK +username);
        } else {
-           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH +"/home.jsp");
+           response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp");
         }
+    }
 
+    public void logInSession(String username, String ip, Session jcrSession){
+        if ((!(username.isEmpty())) && (!(username.equals(EMPTY_SPACE)))
+                && (!(ip.equals(EMPTY_SPACE))) &&(!(ip.isEmpty()))){
+            if (jcrSession != null){
+                try {
+                    Node rootNode = jcrSession.getRootNode();
+                    if (rootNode.hasNode(SKILLKIT_SESSIONS_PATH)){
+                        Node sessionsNode = rootNode.getNode(SKILLKIT_SESSIONS_PATH);
+                        if (sessionsNode != null) {
+                            if (sessionsNode.hasNode(username + DASH + ip)) {
+                               sessionsNode.getNode(username + DASH + ip);
+                            }else{
+                                sessionsNode.addNode(username + DASH + ip);
+                            }
+                        } else {
+                            Node sessions = sessionsNode.addNode(SESSIONS_KEY);
+                            sessions.addNode(username + DASH + ip);
+                        }
 
-
+                    }else{
+                        Node sessions = rootNode.addNode(SKILLKIT_SESSIONS_PATH);
+                        Node session = sessions.addNode(username + DASH + ip);
+                    }
+                } catch (RepositoryException e) {
+                    e.printStackTrace();
+                    System.out.print("error en el repo");
+                }
+            }
+        }
     }
 
     /**
@@ -48,7 +75,7 @@ public class AuthenticationServlet extends HttpServlet {
      * @param pass
      * @return
      */
-    public Node authenticate(String username, String pass){
+    public Node authenticate(String username, String pass, String ip){
         try{
             Session jcrSession = repoLogin();
             if(jcrSession != null){
@@ -56,6 +83,7 @@ public class AuthenticationServlet extends HttpServlet {
                 if (user != null) {
                     Node passwordNode = user.getNode(pass);
                     if (passwordNode != null) {
+                        logInSession(username, ip, jcrSession);
                         return user;
                     }
                 }

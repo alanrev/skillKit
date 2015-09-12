@@ -5,14 +5,20 @@ package com.skillkit.utils;
  */
 public class Constants {
     public static final String SKILLKIT_USERS_PATH = "SkillKit/users/";
+    public static final String SKILLKIT_SESSIONS_PATH = "SkillKit/sessions/";
     public static final String SKILLKIT_HOST_PATH = "http://localhost:8084/SkillKit";
     public static final String SKILLKIT_KEY = "SkillKit";
     public static final String USERS_KEY = "users";
+    public static final String SESSIONS_KEY = "sessions";
     public static final String RMI_PATH = "http://localhost:8080/rmi";
     public static final String ADMIN_KEY = "admin";
+
+    //utils
     public static final String BLANK = "";
     public static final String EMPTY_SPACE = " ";
     public static final String SLASH = "/";
+    public static final String DASH = "-";
+    public static final String EXCLAMATION_MARK = "?";
 
 
     //users constants
