@@ -43,7 +43,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="Profile.jsp?username=<%= user%>">
+              <a href="profile.jsp?username=<%= user%>">
                 <img src="./appImages/profile.png">
                 Profile
               </a>
