@@ -47,17 +47,17 @@
                         <form class="form-horizontal" action="createNewUser"  method="POST">
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
-                                    <input type="text" class="form-control" id="username" name="user" placeholder="Username" required="required">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
-                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required="required">
+                                    <input type="text" class="form-control" id="firstName" name="firstname" placeholder="First Name" required="required">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
-                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required="required">
+                                    <input type="text" class="form-control" id="lastName" name="lastname" placeholder="Last Name" required="required">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -67,12 +67,21 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
-                                    <input type="password" class="form-control" id="password" name="pass" placeholder="Password" required="required">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
                                     <input type="password" class="form-control" id="confPass" name="confPass" placeholder="Confirm Password" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-md-5">
+                                    <select class="form-control" name="role" required>
+                                        <option value="" selected disabled>Select your role</option>
+                                        <option value = "1">Project Manager</option>
+                                        <option value = "2">Developer</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 
+import static com.skillkit.utils.Constants.*;
 /**
  *
  * @author xumakgt5
@@ -37,13 +38,14 @@ public class createNewUserServlet extends HttpServlet {
             throws ServletException, IOException {
         if(null != response){
             if(request != null){
-                String firstname = request.getParameter("firstName");
-                String lastname = request.getParameter("lastName");
-                String email = request.getParameter("email");
-                String userName = request.getParameter("user");
-                String password = request.getParameter("pass");
-                String confPassword = request.getParameter("confPass");
-                String show = autentication(firstname, lastname, email, userName, password, confPassword);
+                String firstname = request.getParameter(FIRSTNAME_KEY).toString();
+                String lastname = request.getParameter(LASTNAME_KEY).toString();
+                String email = request.getParameter(EMAIL_KEY).toString();
+                String userName = request.getParameter(USERNAME_KEY).toString();
+                String password = request.getParameter(PASSWORD_KEY).toString();
+                String role = request.getParameter(ROLE_KEY).toString();
+                String confPassword = request.getParameter(CONFIRM_PASSWORD_KEY);
+                String show = autentication(userName, firstname, lastname, email, role, password, confPassword);
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
                     out.println("<!DOCTYPE html>");
@@ -81,7 +83,7 @@ public class createNewUserServlet extends HttpServlet {
                             "                </ul>\n" +
                                     "                <ul class=\"nav navbar-nav navbar-right\">\n" +
                                     "                    <li>\n" +
-                                    "                        <a>Log in</a>\n" +
+                                    "                        <a href=\"index.jsp\">Log in</a>\n" +
                                     "                    </li>\n" +
                                     "                </ul>\n" +
                             "            </div>\n" +
@@ -115,17 +117,35 @@ public class createNewUserServlet extends HttpServlet {
      * @param confPass a String that is used to confirm the password
      * @return         a String that contains the message of error or accept of the verification.
      */
-    public String autentication(String firstname, String lastname, String email,
-                                String userName, String pass, String confPass){
+    public String autentication(String userName, String firstname, String lastname,
+                                String email, String role,String pass, String confPass){
         try{
             String message = "";
             Session jcrSession = repoLogin();
             if(jcrSession != null){
                 if(pass.equals(confPass)){
-                    Node user = verifyName(userName, firstname, lastname, email, jcrSession);
+                    Node user = verifyName(userName, jcrSession);
                     if(user != null){
+                        if (!firstname.isEmpty()) {
+                            user.setProperty(FIRSTNAME_KEY, firstname);
+                            jcrSession.save();
+                        }
+                        if (!lastname.isEmpty()) {
+                            user.setProperty(LASTNAME_KEY, lastname);
+                            jcrSession.save();
+                        }
+                        if (!email.isEmpty()){
+                            user.setProperty(EMAIL_KEY, email);
+                            jcrSession.save();
+                        }
+                        if (!role.isEmpty()){
+                            user.setProperty(ROLE_KEY, role);
+                            jcrSession.save();
+                        }
                         user.addNode(pass);
                         message =  "The user " + userName + " is created.";
+                    }else{
+                        return "The user " + userName + " is already created.";
                     }
                 } else {
                     System.out.println("the password don't match");
@@ -135,7 +155,7 @@ public class createNewUserServlet extends HttpServlet {
                 repoLogout(jcrSession);
                 return message;
             } else {
-                return "error de acceso al servlet";
+                return "can't access to servlet";
             }
         } catch(RepositoryException re){
             System.out.println(re);
@@ -148,10 +168,10 @@ public class createNewUserServlet extends HttpServlet {
             if ((userName != null)|| (!userName.equals(""))){
                 if(jcrSession != null){
                     Node root = jcrSession.getRootNode();
-                    if(root.hasNode("SkillKit")){
-                        Node skillKit = root.getNode("SkillKit");
-                        if(skillKit.hasNode("users")){
-                            Node users = skillKit.getNode("users");
+                    if(root.hasNode(SKILLKIT_KEY)){
+                        Node skillKit = root.getNode(SKILLKIT_KEY);
+                        if(skillKit.hasNode(USERS_KEY)){
+                            Node users = skillKit.getNode(USERS_KEY);
                             if(users.hasNode(userName)){
                                 return "The user " + userName + " is already created.";
                             }
@@ -178,39 +198,30 @@ public class createNewUserServlet extends HttpServlet {
      * @param jcrSession a Session of Jackrabbit that is used to contains de Repository.
      * @return           a Node with the userName as Name that is used to create a user.
      */
-    public Node verifyName(String userName, String firstname, String lastname, String email,Session jcrSession){
+    public Node verifyName(String userName, Session jcrSession){
         try{
             if(userName != null){
                 if(jcrSession != null){
                     Node root = jcrSession.getRootNode();
-                    if(root.hasNode("SkillKit")){
-                        Node skillKit = root.getNode("SkillKit");
-                        if(skillKit.hasNode("users")){
-                            Node users = skillKit.getNode("users");
+                    if(root.hasNode(SKILLKIT_KEY)){
+                        Node skillKit = root.getNode(SKILLKIT_KEY);
+                        if(skillKit.hasNode(USERS_KEY)){
+                            Node users = skillKit.getNode(USERS_KEY);
                             if(!users.hasNode(userName)){
                                 Node currentUser = users.addNode(userName);
-                                currentUser.setProperty("firstname", firstname);
-                                currentUser.setProperty("lastname", lastname);
-                                currentUser.setProperty("email", email);
                                 return currentUser;
                             } else {
                                 return null;
                             }
                         } else {
-                            Node users = skillKit.addNode("users");
+                            Node users = skillKit.addNode(USERS_KEY);
                             Node currentUser = users.addNode(userName);
-                            currentUser.setProperty("firstname", firstname);
-                            currentUser.setProperty("lastname", lastname);
-                            currentUser.setProperty("email", email);
                             return currentUser;
                         }
                     } else {
-                        Node skillKit = root.addNode("SkillKit");
-                        Node users = skillKit.addNode("users");
+                        Node skillKit = root.addNode(SKILLKIT_KEY);
+                        Node users = skillKit.addNode(USERS_KEY);
                         Node currentUser = users.addNode(userName);
-                        currentUser.setProperty("firstname", firstname);
-                        currentUser.setProperty("lastname", lastname);
-                        currentUser.setProperty("email", email);
                         return currentUser;
                     }
                 }else {
