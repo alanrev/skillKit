@@ -77,6 +77,15 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-md-5">
+                                    <select class="form-control" name="role" required>
+                                        <option value="" selected disabled>Select your role</option>
+                                        <option value = "1">Project Manager</option>
+                                        <option value = "2">Developer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-md-5">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
                                 </div>
                             </div>

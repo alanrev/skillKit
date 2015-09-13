@@ -28,6 +28,11 @@ public class Constants {
     public static final String FIRSTNAME_KEY = "firstname";
     public static final String LASTNAME_KEY = "lastname";
     public static final String EMAIL_KEY = "email";
+    public static final String ROLE_KEY = "role";
     public static final String CONFIRM_PASSWORD_KEY = "confPass";
+
+    //Role
+    public static final String PROJECT_MANAGER_ROLE = "Project Manager";
+    public static final String DEVELOPER_ROLE = "Developer";
 
 }

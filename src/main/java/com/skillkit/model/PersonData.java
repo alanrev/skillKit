@@ -8,6 +8,7 @@ public class PersonData {
     private String firstName;
     private String lastName;
     private String email;
+    private String role;
     public String getFirstName() {
         return firstName;
     }
@@ -29,6 +30,12 @@ public class PersonData {
     }
     public String getEmail(){
         return this.email;
+    }
+    public void setRole(String role){
+        this.role = role;
+    }
+    public String getRole(){
+        return this.role;
     }
 
 }

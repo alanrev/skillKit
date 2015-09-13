@@ -42,6 +42,7 @@ public class UsersInfoServlet extends HttpServlet {
                         String firstname = BLANK;
                         String lastname = BLANK;
                         String email = BLANK;
+                        String role = BLANK;
                         PersonData personData = new PersonData();
                         if (userNode.hasProperty(FIRSTNAME_KEY)){
                             Property firstProperty = userNode.getProperty(FIRSTNAME_KEY);
@@ -55,9 +56,20 @@ public class UsersInfoServlet extends HttpServlet {
                             Property mailProperty = userNode.getProperty(EMAIL_KEY);
                             email = mailProperty.getString();
                         }
+                        if (userNode.hasProperty(ROLE_KEY)){
+                            Property roleProperty = userNode.getProperty(ROLE_KEY);
+                            role = roleProperty.getString();
+                            if (role.equals("1")){
+                                role = PROJECT_MANAGER_ROLE;
+                            }
+                            if (role.equals("2")){
+                                role = DEVELOPER_ROLE;
+                            }
+                        }
                         personData.setFirstName(firstname);
                         personData.setLastName(lastname);
                         personData.setEmail(email);
+                        personData.setRole(role);
                         String json = new Gson().toJson(personData);
                         response.setContentType("application/json");
                         response.getWriter().write(json);

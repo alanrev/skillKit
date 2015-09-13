@@ -43,8 +43,9 @@ public class createNewUserServlet extends HttpServlet {
                 String email = request.getParameter(EMAIL_KEY).toString();
                 String userName = request.getParameter(USERNAME_KEY).toString();
                 String password = request.getParameter(PASSWORD_KEY).toString();
+                String role = request.getParameter(ROLE_KEY).toString();
                 String confPassword = request.getParameter(CONFIRM_PASSWORD_KEY);
-                String show = autentication(userName, firstname, lastname, email, password, confPassword);
+                String show = autentication(userName, firstname, lastname, email, role, password, confPassword);
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
                     out.println("<!DOCTYPE html>");
@@ -117,7 +118,7 @@ public class createNewUserServlet extends HttpServlet {
      * @return         a String that contains the message of error or accept of the verification.
      */
     public String autentication(String userName, String firstname, String lastname,
-                                String email,String pass, String confPass){
+                                String email, String role,String pass, String confPass){
         try{
             String message = "";
             Session jcrSession = repoLogin();
@@ -135,6 +136,10 @@ public class createNewUserServlet extends HttpServlet {
                         }
                         if (!email.isEmpty()){
                             user.setProperty(EMAIL_KEY, email);
+                            jcrSession.save();
+                        }
+                        if (!role.isEmpty()){
+                            user.setProperty(ROLE_KEY, role);
                             jcrSession.save();
                         }
                         user.addNode(pass);

@@ -69,6 +69,7 @@
     <div ng-app="myApp">
         <div ng-controller="MyController" data-ng-init= "getDataFromServer('<%=user%>')">
             <h2>{{person.firstName}} {{person.lastName}} </h2>
+            <h4>{{person.role}}</h4>
             <p>email : {{person.email}}</p>
         </div>
     </div>
