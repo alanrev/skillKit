@@ -43,7 +43,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="ViewImageServlet?username=<%= user%>">
+              <a href="Profile.jsp?username=<%= user%>">
                 <img src="./appImages/profile.png">
                 Profile
               </a>
@@ -65,6 +65,14 @@
 <%-- Navbar End --%>
 <div class="container" align="center">
   <h1>File Upload!</h1>
+
+  <div ng-app="myApp">
+    <div ng-controller="MyController">
+      <button ng-click="getDataFromServer()">Fetch data from server</button>
+      <p>First Name : {{person.firstName}}</p>
+      <p>Last Name : {{person.lastName}}</p>
+    </div>
+  </div>
   <form id ="form" action="UploadFiles" method="POST" enctype="multipart/form-data" class="form-control-static">
     <div class="row" align="center" style="text-overflow: ellipsis;">
 
@@ -80,6 +88,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/usersinfo.js"></script>
 </body>
 </html>

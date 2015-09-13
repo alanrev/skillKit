@@ -27,7 +27,7 @@ public class Constants {
     public static final String PASSWORD_KEY = "password";
     public static final String FIRSTNAME_KEY = "firstname";
     public static final String LASTNAME_KEY = "lastname";
-    public static final String EMAIL_KEY = "lastname";
+    public static final String EMAIL_KEY = "email";
     public static final String CONFIRM_PASSWORD_KEY = "confPass";
 
 }
