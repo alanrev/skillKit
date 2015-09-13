@@ -127,12 +127,15 @@ public class createNewUserServlet extends HttpServlet {
                     if(user != null){
                         if (!firstname.isEmpty()) {
                             user.setProperty(FIRSTNAME_KEY, firstname);
+                            jcrSession.save();
                         }
                         if (!lastname.isEmpty()) {
                             user.setProperty(LASTNAME_KEY, lastname);
+                            jcrSession.save();
                         }
                         if (!email.isEmpty()){
                             user.setProperty(EMAIL_KEY, email);
+                            jcrSession.save();
                         }
                         user.addNode(pass);
                         message =  "The user " + userName + " is created.";
