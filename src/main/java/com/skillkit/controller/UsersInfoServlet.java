@@ -33,7 +33,6 @@ public class UsersInfoServlet extends HttpServlet {
         if ((request != null) && (response != null)) {
             String username = request.getParameter(USERNAME_KEY);
             String ip = request.getRemoteAddr();
-            System.out.println(username+ip);
             if ((!(username.isEmpty()))&&(username != null) && (ip != null) && (!(ip.isEmpty()))) {
                 try{
                     Node userNode = authenticate(username, ip);
