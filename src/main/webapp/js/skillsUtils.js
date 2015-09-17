@@ -3,14 +3,14 @@
  */
 var app = angular.module('skillsUtils', []);
 
-function addSkillController($scope, $http) {
+function getSkillController($scope, $http) {
 
-    $scope.getDataFromServer = function(username, rate) {
+    $scope.getDataFromServer = function(username) {
         $http({
-            method : 'GET',
-            url : 'skillsHandler?username='+ username + "&rate=" + rate
+            method : 'POST',
+            url : 'GetSkill?username='+ username
         }).success(function(data, status, headers, config) {
-            $scope.person = data;
+            $scope.skillData = data;
         }).error(function(data, status, headers, config) {
 
         });

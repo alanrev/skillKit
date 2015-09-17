@@ -77,14 +77,18 @@
                 <a href="newskill.jsp?username=<%=user%>" class="btn btn-primary btn-lg btn-block"> Add a new Skill</a>
             </div>
         </div>
-
-        <h2>My Skills</h2>
-        list of skill
-        ..
-        ..
+        <div class="container">
+            <h2>My Skills</h2>
+            <div ng-app="skillsUtils">
+                <div ng-controller="getSkillController">
+                    <h2>{{skillData.skillName}}</h2>
+                </div>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/usersinfo.js"></script>
+        <script type="text/javascript" src="js/skillsUtils.js"></script>
     </body>
 </html>

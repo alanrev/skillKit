@@ -7,6 +7,11 @@ public class skillData {
     private String skillName;
     private String skillRate;
     private String error;
+    private String description;
+
+    public skillData(){
+        super();
+    }
 
     public void setSkillName(String name){
         this.skillName = name;
@@ -28,5 +33,11 @@ public class skillData {
 
     public void setError(String error){
         this.error = error;
+    }
+    public void setDescription(String description){
+        this.description = description;
+    }
+    public String getDescription(){
+        return this.description;
     }
 }
