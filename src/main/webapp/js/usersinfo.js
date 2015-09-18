@@ -1,9 +1,9 @@
 /**
  * Created by Allan on 12/09/2015.
  */
-var app = angular.module('myApp', []);
+var app = angular.module('userInfo', []);
 
-function MyController($scope, $http) {
+function userInfoController($scope, $http) {
 
     $scope.getDataFromServer = function(username) {
         $http({
@@ -18,3 +18,18 @@ function MyController($scope, $http) {
 
     };
 };
+
+function getSkillController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'GetSkill?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.skillData = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
