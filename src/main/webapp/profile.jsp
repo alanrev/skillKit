@@ -72,23 +72,39 @@
                     <h4>Contact information</h4>
                     <p>email : {{person.email}}</p>
                 </div>
-            </div>
-            <div class="row">
-                <a href="newskill.jsp?username=<%=user%>" class="btn btn-primary btn-lg btn-block"> Add a new Skill</a>
-            </div>
-        </div>
-        <div class="container">
-            <h2>My Skills</h2>
-            <div ng-app="skillsUtils">
-                <div ng-controller="getSkillController">
-                    <h2>{{skillData.skillName}}</h2>
+                <div class="row">
+                    <a href="newskill.jsp?username=<%=user%>" class="btn btn-primary btn-lg btn-block"> Add a new Skill</a>
+                </div>
+                <div class="container">
+                    <h2>My Skills</h2>
+                    <div ng-controller="getSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
+                        <div class="stars">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Skill Name</th>
+                                    <th>Skill Description</th>
+                                    <th>Rate</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="skill in skillData">
+                                <tr class="active">
+                                    <td><strong>{{skill.skillName}}</strong></td>
+                                    <td><p>{{skill.description}}</p></td>
+                                    <td>{{skill.skillRate}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/usersinfo.js"></script>
-        <script type="text/javascript" src="js/skillsUtils.js"></script>
     </body>
 </html>
