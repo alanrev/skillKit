@@ -29,13 +29,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="ViewDocumentServlet?username=<%= user%>">
+                                    <a href="#?username=<%= user%>">
                                         <img src="./appImages/task.png">
                                         My Task
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="ViewDocumentServlet?username=<%= user%>">
+                                    <a href="#?username=<%= user%>">
                                         <img src="./appImages/projects.png"  width="48" height="48">
                                         Projects
                                     </a>
@@ -92,6 +92,11 @@
                                     <td><strong>{{skill.skillName}}</strong></td>
                                     <td><p>{{skill.description}}</p></td>
                                     <td>{{skill.skillRate}}
+                                        <input name="star3" type="radio" class="star" disabled="disabled"/>
+                                        <input name="star3" type="radio" class="star" disabled="disabled"/>
+                                        <input name="star3" type="radio" class="star" disabled="disabled" checked="checked"/>
+                                        <input name="star3" type="radio" class="star" disabled="disabled"/>
+                                        <input name="star3" type="radio" class="star" disabled="disabled"/>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -30,13 +30,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="ViewDocumentServlet?username=<%= user%>">
+                            <a href="#?username=<%= user%>">
                                 <img src="./appImages/task.png">
                                 My Task
                             </a>
                         </li>
                         <li>
-                            <a href="ViewDocumentServlet?username=<%= user%>">
+                            <a href="#?username=<%= user%>">
                                 <img src="./appImages/projects.png"  width="48" height="48">
                                 Projects
                             </a>

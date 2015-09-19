@@ -29,13 +29,13 @@
               </a>
             </li>
             <li>
-              <a href="ViewDocumentServlet?username=<%= user%>">
+              <a href="#?username=<%= user%>">
                 <img src="./appImages/task.png">
                  My Task
               </a>
             </li>
             <li>
-              <a href="ViewDocumentServlet?username=<%= user%>">
+              <a href="#?username=<%= user%>">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -64,26 +64,12 @@
 
 <%-- Navbar End --%>
 <div class="container" align="center">
-  <h1>File Upload!</h1>
 
-  <div ng-app="myApp">
-    <div ng-controller="MyController">
-      <button ng-click="getDataFromServer()">Fetch data from server</button>
-      <p>First Name : {{person.firstName}}</p>
-      <p>Last Name : {{person.lastName}}</p>
-    </div>
-  </div>
-  <form id ="form" action="UploadFiles" method="POST" enctype="multipart/form-data" class="form-control-static">
-    <div class="row" align="center" style="text-overflow: ellipsis;">
-
-      Hola <%= user%>
-      <input type="hidden"  name="username" id="username" value= <%= user %> />
-      <input type="file"  name="file" id="file" accept="audio/mp3, audio/wav, image/png, image/jpeg, image/jpg,
-                                                                          image/bmp, video/mp4, video/webm, application/pdf, text/html"/>
-    </div>
-    <br>
-    <input type="submit" value="Upload" name="upload" id="upload"/>
-  </form>
+  <div ng-app="userInfo">
+      <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
+        <h2> Welcome {{person.firstName}} {{person.lastName}} </h2>
+      </div>
+   </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

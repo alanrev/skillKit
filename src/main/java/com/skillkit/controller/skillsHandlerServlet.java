@@ -44,8 +44,8 @@ public class skillsHandlerServlet extends HttpServlet {
                     response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "profile.jsp" + EXCLAMATION_MARK + USERNAME_KEY
                             + EQUAL_KEY+ username);
                 } else {
-                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "newskill.jsp" + USERNAME_KEY
-                            + EQUAL_KEY+ username + AND + EXCLAMATION_MARK + ERROR
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "newskill.jsp" + EXCLAMATION_MARK + USERNAME_KEY
+                            + EQUAL_KEY+ username + AND  + ERROR
                             + EQUAL_KEY + "1");
                 }
             }
