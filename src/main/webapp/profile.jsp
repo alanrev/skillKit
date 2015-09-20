@@ -61,11 +61,11 @@
             </div>
             </div>
         </nav>
+        <div class="container" align="center">
         <% if (user == null){ %>
         <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
         } else { %>
         <%-- Navbar End --%>
-            <div class="container" align="center">
                 <div ng-app="userInfo">
                     <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
                         <h2>{{person.firstName}} {{person.lastName}} </h2>
@@ -80,31 +80,25 @@
                     <div class="container">
                         <h2>My Skills</h2>
                         <div ng-controller="getSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
-                            <div class="stars">
-                                <table class="table">
+                                <table class="table  table-condensed table-striped">
                                     <thead>
                                     <tr>
                                         <th>Skill Name</th>
                                         <th>Skill Description</th>
-                                        <th>Rate</th>
+                                        <th>Skill Knowledge</th>
                                     </tr>
                                     </thead>
-                                    <tbody ng-repeat="skill in skillData">
-                                    <tr class="active">
+                                    <tbody>
+                                    <tr class="active" ng-repeat="skill in skillData">
                                         <td><strong>{{skill.skillName}}</strong></td>
                                         <td><p>{{skill.description}}</p></td>
-                                        <td>{{skill.skillRate}}
-                                            <input name="star3" type="radio" class="star" disabled="disabled"/>
-                                            <input name="star3" type="radio" class="star" disabled="disabled"/>
-                                            <input name="star3" type="radio" class="star" disabled="disabled" checked="checked"/>
-                                            <input name="star3" type="radio" class="star" disabled="disabled"/>
-                                            <input name="star3" type="radio" class="star" disabled="disabled"/>
+                                        <td>
+                                            <progress value="{{skill.skillRate}}" max="5"></progress> {{skill.skillRate}} / 5
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
