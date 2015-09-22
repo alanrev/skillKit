@@ -4,6 +4,7 @@ import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 
 import javax.jcr.*;
 import java.net.MalformedURLException;
+import java.util.*;
 
 import static com.skillkit.utils.Constants.*;
 import static com.skillkit.utils.Constants.SKILLKIT_USERS_PATH;
@@ -97,5 +98,45 @@ public class JCRUtils {
         } else {
             System.out.println("Session can't be closed");
         }
+    }
+
+    public List<Map<String, Object>> getNodeListProperties(Node rootNode){
+        List<Map<String, Object>> nodesPropertiesList = new ArrayList<>();
+        try {
+            if (rootNode != null) {
+                if (rootNode.hasNodes()) {
+                    Iterator<Node> nodeIterator = rootNode.getNodes();
+                    while(nodeIterator.hasNext()){
+                        Node node = nodeIterator.next();
+                        if (node.hasProperties()) {
+                            Map<String, Object>  nodePropertiesMap = new HashMap<>();
+                            Iterator<Property> propertyIterator = node.getProperties();
+                            nodePropertiesMap.put(NAME, node.getName());
+                            while(propertyIterator.hasNext()){
+                                Property property = propertyIterator.next();
+                                String propertyName = property.getName();
+                                if(!(property.isMultiple())){
+                                    Value value = property.getValue();
+                                    String valueString = value.getString();
+                                    nodePropertiesMap.put(propertyName, valueString);
+                                }else{
+                                    Value[] values = property.getValues();
+                                    ArrayList<String> listOfValues = new ArrayList<>();
+                                    for(Value value : values){
+                                        listOfValues.add(value.getString());
+                                    }
+                                    nodePropertiesMap.put(propertyName, listOfValues);
+                                }
+                            }
+                            nodesPropertiesList.add(nodePropertiesMap);
+                        }
+                    }
+                }
+            }
+        } catch (RepositoryException re){
+            re.printStackTrace();
+            return nodesPropertiesList;
+        }
+        return nodesPropertiesList;
     }
 }

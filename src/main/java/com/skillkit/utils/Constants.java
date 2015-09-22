@@ -15,6 +15,7 @@ public class Constants {
     public static final String ADMIN_KEY = "admin";
     public static final String ERROR = "error";
     public static final String AND = "&";
+    public static final String NAME = "name";
 
     //utils
     public static final String BLANK = "";
