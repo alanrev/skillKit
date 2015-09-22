@@ -73,6 +73,8 @@
       <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
         <h2> Welcome {{person.firstName}} {{person.lastName}} </h2>
       </div>
+    <br>
+    <h3>  New skills added for your role</h3>
     <div ng-controller="getNewRoleSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
       <table class="table  table-condensed table-striped">
         <thead>
@@ -103,7 +105,7 @@
                   <label class="star star-2" for="star-2"></label>
                   <input class="star star-1" id="star-1" type="radio" name="skillrate" value="1"/>
                   <label class="star star-1" for="star-1"></label>
-                  <button type="submit" class="btn btn-primary btn-lg btn-block">Add Skill</button>
+                  <button type="submit" class="btn btn-primary btn-block">Add Skill</button>
                 </div>
               </form>
             </div>

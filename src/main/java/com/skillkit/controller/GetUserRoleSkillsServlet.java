@@ -84,26 +84,33 @@ public class GetUserRoleSkillsServlet extends HttpServlet {
                                             }else{
                                                 Node userSkills = userNode.getNode(SKILLS_NODE_KEY);
                                                 ArrayList<skillData> skillsArray = new ArrayList<>();
+                                                List<Map<String, Object>> roleSkillsMapList2 =
+                                                        jcrUtils.getNodeListProperties(roleSkillsNode);
                                                 if ((userSkills.hasNodes()) && (!(roleSkillsMapList.isEmpty()))){
                                                     Iterator<Node> skillNodes = userSkills.getNodes();
                                                     while (skillNodes.hasNext()){
                                                         Node skillNode = skillNodes.next();
                                                         String skillName = skillNode.getName();
-                                                        for (Map<String, Object> map : roleSkillsMapList){
+                                                        for (Map<String, Object> map : roleSkillsMapList2){
                                                             if(map.containsKey(NAME)){
                                                                 String name = map.get(NAME).toString();
-                                                                if (!(name.equals(skillName))){
-                                                                    skillData skillData = new skillData();
-                                                                    skillData.setSkillName(name);
-                                                                    if (map.containsKey(SKILL_DESCRIPTION)){
-                                                                        String desc = map.get(SKILL_DESCRIPTION)
-                                                                                         .toString();
-                                                                        skillData.setDescription(desc);
-                                                                    }
-                                                                    skillsArray.add(skillData);
+                                                                if (name.equals(skillName)){
+                                                                    roleSkillsMapList.remove(map);
                                                                 }
                                                             }
                                                         }
+                                                    }
+                                                    for(Map<String, Object> map : roleSkillsMapList){
+                                                        skillData skillData = new skillData();
+                                                        if (map.containsKey(NAME)){
+                                                            String name = map.get(NAME).toString();
+                                                            skillData.setSkillName(name);
+                                                        }
+                                                        if (map.containsKey(SKILL_DESCRIPTION)){
+                                                            String desc = map.get(SKILL_DESCRIPTION).toString();
+                                                            skillData.setDescription(desc);
+                                                        }
+                                                        skillsArray.add(skillData);
                                                     }
                                                 }
                                                 String json = new Gson().toJson(skillsArray);
