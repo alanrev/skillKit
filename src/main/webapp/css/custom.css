@@ -48,3 +48,6 @@ label.star:before {
     content: '\f006';
     font-family: FontAwesome;
 }
+
+.date-form { margin: 10px; }
+label.control-label span { cursor: pointer; }

@@ -1,18 +1,19 @@
 <%--
   Created by IntelliJ IDEA.
   User: Allan
-  Date: 18/09/2015
-  Time: 9:27 PM
+  Date: 23/09/2015
+  Time: 7:50 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <%String user = request.getParameter("username");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Projects</title>
+  <title>Add a New Project</title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
   <link rel='stylesheet' href='./css/custom.css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -63,24 +64,32 @@
   </div>
   </div>
 </nav>
-
 <%-- Navbar End --%>
-<div class="container" align="center">
-    <% if (user == null){ %>
-      <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
-    } else { %>
-      <div ng-app="userInfo">
-        <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
-          <h2>Projects</h2>
-          <a href="newproject.jsp?username=<%= user%>">Create new project</a>
-        </div>
-      </div>
-
-    <%
-      }
-    %>
+<% if (user == null){ %>
+<div class="container-fluid">
+  <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div>
 </div>
-
+  <%
+} else { %>
+<div class="container" align="center">
+  <h2>Create Project</h2>
+    <form class="form-control-static" action="CreateProject" method="POST">
+      <div class="row" align="center" style="text-overflow: ellipsis;">
+        <input type="hidden"  name="username" id="username" value= <%= user %> />
+        <input type="text" class="form-control" id="projectname" name="projectname" placeholder="Project Name"
+               required="required">
+        <textarea class="form-control" rows="3" name="projectdescription" required="required"
+                  placeholder="Project Description"></textarea>
+        <input  type="date" class="date-picker form-control" name="startdate" placeholder="Start Date">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<%
+  }
+%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>

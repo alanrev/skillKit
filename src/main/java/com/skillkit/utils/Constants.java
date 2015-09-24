@@ -6,6 +6,7 @@ package com.skillkit.utils;
 public class Constants {
     public static final String SKILLKIT_USERS_PATH = "SkillKit/users/";
     public static final String SKILLKIT_SESSIONS_PATH = "SkillKit/sessions/";
+    public static final String SKILLKIT_PROJECTS_PATH = "SkillKit/projects/";
     public static final String SKILLKIT_SKILLS_PATH = "SkillKit/skills/";
     public static final String SKILLKIT_HOST_PATH = "http://localhost:8084/SkillKit";
     public static final String SKILLKIT_KEY = "SkillKit";
@@ -64,5 +65,14 @@ public class Constants {
     public static final String SKILL_NAME = "skillname";
     public static final String SKILL_DESCRIPTION = "skilldescription";
     public static final String SKILL_RATE = "skillrate";
+
+    //projects
+    public static final String PROJECTS = "projects";
+    public static final String START_DATE = "startdate";
+    public static final String PROJECT_NAME_KEY = "projectname";
+    public static final String PROJECT_DESCRIPTION_KEY = "projectdescription";
+    public static final String PM_NAME = "projectmanager";
+
+    //tasks
 
 }
