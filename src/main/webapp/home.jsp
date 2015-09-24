@@ -11,6 +11,7 @@
   <title>Home</title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
   <link rel='stylesheet' href='./css/custom.css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -29,13 +30,13 @@
               </a>
             </li>
             <li>
-              <a href="ViewDocumentServlet?username=<%= user%>">
+              <a href="#?username=<%= user%>">
                 <img src="./appImages/task.png">
                  My Task
               </a>
             </li>
             <li>
-              <a href="ViewDocumentServlet?username=<%= user%>">
+              <a href="#?username=<%= user%>">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -64,26 +65,60 @@
 
 <%-- Navbar End --%>
 <div class="container" align="center">
-  <h1>File Upload!</h1>
 
-  <div ng-app="myApp">
-    <div ng-controller="MyController">
-      <button ng-click="getDataFromServer()">Fetch data from server</button>
-      <p>First Name : {{person.firstName}}</p>
-      <p>Last Name : {{person.lastName}}</p>
-    </div>
-  </div>
-  <form id ="form" action="UploadFiles" method="POST" enctype="multipart/form-data" class="form-control-static">
-    <div class="row" align="center" style="text-overflow: ellipsis;">
-
-      Hola <%= user%>
-      <input type="hidden"  name="username" id="username" value= <%= user %> />
-      <input type="file"  name="file" id="file" accept="audio/mp3, audio/wav, image/png, image/jpeg, image/jpg,
-                                                                          image/bmp, video/mp4, video/webm, application/pdf, text/html"/>
-    </div>
+  <% if (user == null){ %>
+  <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
+  } else { %>
+  <div ng-app="userInfo">
+      <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
+        <h2> Welcome {{person.firstName}} {{person.lastName}} </h2>
+      </div>
     <br>
-    <input type="submit" value="Upload" name="upload" id="upload"/>
-  </form>
+    <h3>  New skills added for your role</h3>
+    <div ng-controller="getNewRoleSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
+      <table class="table  table-condensed table-striped">
+        <thead>
+        <tr>
+          <th>Skill Name</th>
+          <th>Skill Description</th>
+          <th>Skill Knowledge</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="active" ng-repeat="skill in skillData">
+          <td><strong>{{skill.skillName}}</strong></td>
+          <td><p>{{skill.description}}</p></td>
+          <td>
+            <div class="stars">
+              <form class="form-control-static" action="skillsHandler" method="POST">
+                <div class="row" align="center" style="text-overflow: ellipsis;">
+                  <input type="hidden"  name="username" id="username" value= <%= user %> />
+                  <input type="hidden" id="skillname" name="skillname" value ="{{skill.skillName}}">
+                  <input type="hidden" id="skilldescription" name="skilldescription" value="{{skill.description}}" >
+                  <input class="star star-5" id="star-5" type="radio" name="skillrate" value="5"/>
+                  <label class="star star-5" for="star-5"></label>
+                  <input class="star star-4" id="star-4" type="radio" name="skillrate" value="4"/>
+                  <label class="star star-4" for="star-4"></label>
+                  <input class="star star-3" id="star-3" type="radio" name="skillrate" value="3"/>
+                  <label class="star star-3" for="star-3"></label>
+                  <input class="star star-2" id="star-2" type="radio" name="skillrate" value="2"/>
+                  <label class="star star-2" for="star-2"></label>
+                  <input class="star star-1" id="star-1" type="radio" name="skillrate" value="1"/>
+                  <label class="star star-1" for="star-1"></label>
+                  <button type="submit" class="btn btn-primary btn-block">Add Skill</button>
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+   </div>
+  <%
+    }
+  %>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

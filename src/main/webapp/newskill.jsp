@@ -30,13 +30,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="ViewDocumentServlet?username=<%= user%>">
+                            <a href="#?username=<%= user%>">
                                 <img src="./appImages/task.png">
                                 My Task
                             </a>
                         </li>
                         <li>
-                            <a href="ViewDocumentServlet?username=<%= user%>">
+                            <a href="#?username=<%= user%>">
                                 <img src="./appImages/projects.png"  width="48" height="48">
                                 Projects
                             </a>
@@ -63,32 +63,38 @@
     </div>
 </nav>
     <%-- Navbar End --%>
-        <div class="container" align="center">
-            <h2>Have you learned anything new?</h2>
-            <div class="stars">
-                <form class="form-control-static" action="skillsHandler" method="POST">
-                    <div class="row" align="center" style="text-overflow: ellipsis;">
-                        <input type="hidden"  name="username" id="username" value= <%= user %> />
-                        <input type="text" class="form-control" id="skillname" name="skillname" placeholder="Skill name" required="required">
-                        <textarea class="form-control" rows="3" name="skilldescription" required="required"
-                                  placeholder="Tell us about your skill"></textarea>
-                        <p></p>
-                        <input class="star star-5" id="star-5" type="radio" name="skillrate" value="5"/>
-                        <label class="star star-5" for="star-5"></label>
-                        <input class="star star-4" id="star-4" type="radio" name="skillrate" value="4"/>
-                        <label class="star star-4" for="star-4"></label>
-                        <input class="star star-3" id="star-3" type="radio" name="skillrate" value="3"/>
-                        <label class="star star-3" for="star-3"></label>
-                        <input class="star star-2" id="star-2" type="radio" name="skillrate" value="2"/>
-                        <label class="star star-2" for="star-2"></label>
-                        <input class="star star-1" id="star-1" type="radio" name="skillrate" value="1"/>
-                        <label class="star star-1" for="star-1"></label>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Add Skill</button>
-                    </div>
-                </form>
+        <% if (user == null){ %>
+        <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
+        } else { %>
+            <div class="container" align="center">
+                <h2>Have you learned anything new?</h2>
+                <div class="stars">
+                    <form class="form-control-static" action="skillsHandler" method="POST">
+                        <div class="row" align="center" style="text-overflow: ellipsis;">
+                            <input type="hidden"  name="username" id="username" value= <%= user %> />
+                            <input type="text" class="form-control" id="skillname" name="skillname" placeholder="Skill name" required="required">
+                            <textarea class="form-control" rows="3" name="skilldescription" required="required"
+                                      placeholder="Tell us about your skill"></textarea>
+                            <p></p>
+                            <input class="star star-5" id="star-5" type="radio" name="skillrate" value="5"/>
+                            <label class="star star-5" for="star-5"></label>
+                            <input class="star star-4" id="star-4" type="radio" name="skillrate" value="4"/>
+                            <label class="star star-4" for="star-4"></label>
+                            <input class="star star-3" id="star-3" type="radio" name="skillrate" value="3"/>
+                            <label class="star star-3" for="star-3"></label>
+                            <input class="star star-2" id="star-2" type="radio" name="skillrate" value="2"/>
+                            <label class="star star-2" for="star-2"></label>
+                            <input class="star star-1" id="star-1" type="radio" name="skillrate" value="1"/>
+                            <label class="star star-1" for="star-1"></label>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Add Skill</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
     </div>
+    <%
+        }
+    %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>

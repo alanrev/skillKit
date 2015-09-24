@@ -19,6 +19,7 @@
         margin: 0 auto;
     }
 </style>
+<body>
     <%-- Navbar Start --%>
     <nav class="navbar-wrapper">
         <div class="container">
@@ -37,6 +38,12 @@
         </div>
     </nav>
     <%-- Navbar End --%>
+    <%String error = request.getParameter("error");%>
+    <% if (error != null){
+        if (error.equals("1")) { %>
+    <div class="alert alert-danger" role="alert">Can't log in, wrong user or wrong password, please try again</div><%
+        }
+        } %>
     <div class="container">
         <div class="row">
             <div class="col-lg-1 col-centered">

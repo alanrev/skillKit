@@ -15,14 +15,33 @@ public class Constants {
     public static final String ADMIN_KEY = "admin";
     public static final String ERROR = "error";
     public static final String AND = "&";
+    public static final String NAME = "name";
 
     //utils
     public static final String BLANK = "";
     public static final String EMPTY_SPACE = " ";
     public static final String SLASH = "/";
     public static final String DASH = "-";
+    public static final String DOT_AND_COMA = ";";
+    public static final String ADMIRATION_MARK = "!";
+    public static final String AT = "@";
+    public static final String HASH = "#";
+    public static final String PIPE = "|";
+    public static final String DOLAR = "$";
+    public static final String OPEN = "(";
+    public static final String CLOSE = ")";
+    public static final String PORCENT = "%";
+    public static final String PLUS = "+";
+    public static final String MULT ="*";
+    public static final String SYMB1 = "´";
+    public static final String SYMB2 = "\"";
+    public static final String OPEN2 = "{";
+    public static final String CLOSE2 = "}";
+    public static final String GREAT = "<";
+    public static final String LESS = "<";
     public static final String EXCLAMATION_MARK = "?";
     public static final String EQUAL_KEY = "=";
+    public static final String RESPONSE = "response";
 
 
     //users constants

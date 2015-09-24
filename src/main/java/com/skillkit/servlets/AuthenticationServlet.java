@@ -40,7 +40,7 @@ public class AuthenticationServlet extends HttpServlet {
                     response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=1");
                 }
             }else{
-                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=2");
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=1");
             }
         }
     }

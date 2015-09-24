@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.skillkit.utils.StringValidations;
 import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 
 import static com.skillkit.utils.Constants.*;
@@ -36,8 +37,8 @@ public class createNewUserServlet extends HttpServlet {
      */
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(null != response){
-            if(request != null){
+        String show = BLANK;
+            if ((null != response) && (request != null)){
                 String firstname = request.getParameter(FIRSTNAME_KEY).toString();
                 String lastname = request.getParameter(LASTNAME_KEY).toString();
                 String email = request.getParameter(EMAIL_KEY).toString();
@@ -45,66 +46,17 @@ public class createNewUserServlet extends HttpServlet {
                 String password = request.getParameter(PASSWORD_KEY).toString();
                 String role = request.getParameter(ROLE_KEY).toString();
                 String confPassword = request.getParameter(CONFIRM_PASSWORD_KEY);
-                String show = autentication(userName, firstname, lastname, email, role, password, confPassword);
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>\n" +
-                            "<style type=\"text/css\">\n" +
-                            "    body {\n" +
-                            "        background-image:\n" +
-                            "        url('http://cdn3.crunchify.com/wp-content/uploads/2013/03/Crunchify.bg_.300.png');\n" +
-                            "    }\n" +
-                            "</style>\n" +
-                            "\n" +
-                            "<head>\n" +
-                            "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n" +
-                            "    <title>SkillKit - Create a new user</title>\n" +
-                            "    <link rel='stylesheet' href='./css/bootstrap.min.css'>\n" +
-                            "</head>\n" +
-                            "<style type=\"text/css\">\n" +
-                            "    .col-centered{\n" +
-                            "        float: none;\n" +
-                            "        margin: 0 auto;\n" +
-                            "    }\n" +
-                            "</style>\n" +
-                            "<nav class=\"navbar-wrapper\">\n" +
-                            "    <div class=\"container\">\n" +
-                            "        <br>\n" +
-                            "        <div class=\"navbar navbar-inverse\" role=\"navigation\">\n" +
-                            "            <div class=\"navbar-collapse collapse in\" style=\"height: auto;\">\n" +
-                            "                <ul class=\"nav navbar-nav navbar-left\">\n" +
-                            "                    <li>\n" +
-                            "                        <img src=\"./appImages/logo.png\" width=\"50\" height=\"50\">\n" +
-                            "                    </li>\n" +
-                            "                    <li>\n" +
-                            "                        <h2>SkillKit</h2>\n" +
-                            "                    </li>\n" +
-                            "                </ul>\n" +
-                                    "                <ul class=\"nav navbar-nav navbar-right\">\n" +
-                                    "                    <li>\n" +
-                                    "                        <a href=\"index.jsp\">Log in</a>\n" +
-                                    "                    </li>\n" +
-                                    "                </ul>\n" +
-                            "            </div>\n" +
-                            "        </div>\n" +
-                            "    </div>\n" +
-                            "</nav>\n" +
-                            "<div class=\"container\">\n" +
-                            "    <div class=\"row\">\n" +
-                            "        <div class=\"col-centered\">\n");
-                    out.println("<h1>"+ userName+"</h1>");
-                    out.println("<h1>"+ firstname + " "+ lastname+"</h1>");
-                    out.println("<h1>"+ email +"</h1>");
-                    out.println("<h1>"+show+"</h1>");
-                    out.println("</div></div></div>");
-                    out.println("</body>");
-                    out.println("</html>");
-                out.close();
-            } else {
-                System.out.println("request empty");
-            }
+                StringValidations stringValidations = new StringValidations();
+                if (stringValidations.validateUsername(userName)) {
+                    show = autentication(userName, firstname, lastname, email, role, password, confPassword);
+                }else{
+                    show = "4";
+                }
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "NewUser.jsp" + EXCLAMATION_MARK + RESPONSE
+                        + EQUAL_KEY + show );
         } else {
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "NewUser.jsp" + EXCLAMATION_MARK + RESPONSE
+                        + EQUAL_KEY + show );
             System.out.println("response empty");
         }
     }
@@ -122,7 +74,7 @@ public class createNewUserServlet extends HttpServlet {
         try{
             String message = "";
             Session jcrSession = repoLogin();
-            if(jcrSession != null){
+            if(jcrSession != null) {
                 if(pass.equals(confPass)){
                     Node user = verifyName(userName, jcrSession);
                     if(user != null){
@@ -143,53 +95,25 @@ public class createNewUserServlet extends HttpServlet {
                             jcrSession.save();
                         }
                         user.addNode(pass);
-                        message =  "The user " + userName + " is created.";
+                        message =  "0";
                     }else{
-                        return "The user " + userName + " is already created.";
+                        return "1";
                     }
                 } else {
-                    System.out.println("the password don't match");
-                    message = "the password and the confirm password don't match";
+                    message = "2";
                 }
                 jcrSession.save();
                 repoLogout(jcrSession);
                 return message;
             } else {
-                return "can't access to servlet";
+                return "3";
             }
         } catch(RepositoryException re){
             System.out.println(re);
-            return "can't connect to repository";
+            return "3";
         }
     }
 
-    public String verifyUsername(String userName,Session jcrSession){
-        try{
-            if ((userName != null)|| (!userName.equals(""))){
-                if(jcrSession != null){
-                    Node root = jcrSession.getRootNode();
-                    if(root.hasNode(SKILLKIT_KEY)){
-                        Node skillKit = root.getNode(SKILLKIT_KEY);
-                        if(skillKit.hasNode(USERS_KEY)){
-                            Node users = skillKit.getNode(USERS_KEY);
-                            if(users.hasNode(userName)){
-                                return "The user " + userName + " is already created.";
-                            }
-                        }
-                    }
-                }else {
-                    return "session close";
-                }
-
-            } else {
-                return "Empty username";
-            }
-            return "";
-        } catch(RepositoryException re){
-            System.out.println("Erron can't connect to jackrabbit");
-            return "Repository exception";
-        }
-    }
 
     /**
      * This method is used to verify that the Name don't exist at the repository and to be sure that the repository is already created.
@@ -232,7 +156,7 @@ public class createNewUserServlet extends HttpServlet {
                 return null;
             }
         } catch(RepositoryException re){
-            System.out.println("Erron can't connect to jackrabbit");
+            System.out.println("Error can't connect to jackrabbit");
             return null;
         }
     }

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <html>
+<%String resp = request.getParameter("response");%>
     <style type="text/css">
         body {
             background-image:
@@ -29,7 +30,7 @@
                     <div class="navbar-collapse collapse in" style="height: auto;">
                         <ul class="nav navbar-nav navbar-left">
                             <li>
-                                <img src="./appImages/logo.png" width="50" height="50">
+                               <a href="index.jsp"> <img src="./appImages/logo.png" width="50" height="50"></a>
                             </li>
                             <li>
                                 <h2>SkillKit</h2>
@@ -41,6 +42,33 @@
         </nav>
         <%-- Navbar End --%>
         <div class="container">
+            <%  if (!(resp == null)){
+                if (resp.equals("0")){ %>
+            <div class="alert alert-success" role="alert">
+                <strong>Congratulations!</strong> User created now you can <a href="index.jsp" class="alert-link"> log in</a>
+            </div> <%
+            }
+            if (resp.equals("1")){ %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> User is already created
+            </div> <%
+            }
+            if (resp.equals("2")){ %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> Password and Confirm Password
+            </div> <%
+                }
+            if (resp.equals("3")){ %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> Server is offline :(
+            </div> <%
+                }
+            if (resp.equals("4")){ %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> Invalid name format
+            </div> <%
+                }
+            }%>
             <div class="row">
                 <div class="col-centered">
                     <div class="col-md-10 col-md-offset-3">
