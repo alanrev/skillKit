@@ -69,6 +69,36 @@
     <% if (user == null){ %>
       <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
     } else { %>
+    <%String error = request.getParameter("error");%>
+    <% if (error != null){
+
+            if (error.equals("0")) { %>
+                <div class="alert alert-danger" role="alert">The user is not log in.
+                    <a href="index.jsp" class="alert-link">Please log in</a>
+                </div><%
+            }
+            if (error.equals("1")) { %>
+                <div class="alert alert-danger" role="alert">Session lost.
+                    <a href="index.jsp" class="alert-link">Please log in</a>
+                </div><%
+            }
+            if (error.equals("2")) { %>
+                <div class="alert alert-danger" role="alert">Session lost.
+                    <a href="index.jsp" class="alert-link">Please log in</a>
+                </div><%
+            }
+            if (error.equals("3")) { %>
+                <div class="alert alert-danger" role="alert"><strong>Oops</strong> Server connection has lost</div><%
+            }
+            if (error.equals("4")) { %>
+                <div class="alert alert-danger" role="alert">Session lost, please log in</div><%
+            }
+            if (error.equals("5")) { %>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oops</strong> Can't create a new proyect, please check the create project's form fields
+                </div><%
+            }
+    } %>
       <div ng-app="userInfo">
         <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
           <h2>Projects</h2>

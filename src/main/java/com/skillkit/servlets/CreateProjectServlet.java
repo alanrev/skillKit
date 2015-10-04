@@ -65,19 +65,15 @@ public class CreateProjectServlet extends HttpServlet {
                                         }
                                         Node project = createProject(projectName, jcrSession);
                                         if (project != null) {
-                                            System.out.println(project.getName());
                                             if ((!projectdescription.isEmpty()) &&(projectdescription !=null)) {
                                                 project.setProperty(PROJECT_DESCRIPTION_KEY, projectdescription);
-                                                System.out.println(projectdescription);
                                             }
                                             if ((!startDate.isEmpty()) &&(startDate !=null)) {
                                                 project.setProperty(START_DATE, startDate);
-                                                System.out.println(startDate);
                                             }
                                             project.setProperty(PM_KEY, username);
                                             project.setProperty(PM_NAME, firstname + EMPTY_SPACE + lastname);
                                             jcrSession.save();
-                                            System.out.println(username + " - " + firstname + lastname);
                                             response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" +
                                                     EXCLAMATION_MARK + USERNAME_KEY
                                                     + EQUAL_KEY + username);
@@ -106,6 +102,7 @@ public class CreateProjectServlet extends HttpServlet {
                     response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" + EXCLAMATION_MARK + USERNAME_KEY
                             + EQUAL_KEY + username + AND + ERROR
                             + EQUAL_KEY + 3);
+                    re.printStackTrace();
                 }
 
             }
@@ -119,8 +116,6 @@ public class CreateProjectServlet extends HttpServlet {
                     Node projectsNode = root.getNode(SKILLKIT_PROJECTS_PATH);
                     if (!(projectsNode.hasNode(projectname))) {
                         Node projectNode = projectsNode.addNode(projectname);
-                        Node test = projectsNode.getNode("Test Project");
-                        test.remove();
                         jcrSession.save();
                         return projectNode;
                     }
