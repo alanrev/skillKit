@@ -35,7 +35,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#?username=<%= user%>">
+                                    <a href="projects.jsp?username=<%= user%>">
                                         <img src="./appImages/projects.png"  width="48" height="48">
                                         Projects
                                     </a>

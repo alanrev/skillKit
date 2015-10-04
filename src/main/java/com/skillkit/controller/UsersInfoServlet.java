@@ -36,7 +36,6 @@ public class UsersInfoServlet extends HttpServlet {
             if ((!(username.isEmpty()))&&(username != null) && (ip != null) && (!(ip.isEmpty()))) {
                 try{
                     Node userNode = authenticate(username, ip);
-                    System.out.println("usernode" + userNode);
                     if (userNode != null) {
                         String firstname = BLANK;
                         String lastname = BLANK;
