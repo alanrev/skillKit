@@ -100,9 +100,37 @@
             }
     } %>
       <div ng-app="userInfo">
-        <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
+        <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
           <h2>Projects</h2>
           <a href="newproject.jsp?username=<%= user%>">Create new project</a>
+            <table class="table  table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>Project Manager<th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="active" ng-repeat="project in projectData">
+                    <td><strong>{{project.name}}</strong></td>
+                    <td><p>{{project.projectdescription}}</p></td>
+                    <td>{{project.startdate}}</td>
+                    <td>{{project.projectmanager}}</td>
+                    <td>
+                        <a class="btn btn-primary btn-block" href="#?username<%=user%>&project={{project.name}}">
+                            Tasks
+                        </a>
+                        <a class="btn btn-primary btn-block"
+                           href="assigntoproject.jsp?username=<%=user%>&project={{project.name}}">
+                            Assign team member
+                        </a>
+                    <td>
+                </tr>
+                </tbody>
+            </table>
         </div>
       </div>
 

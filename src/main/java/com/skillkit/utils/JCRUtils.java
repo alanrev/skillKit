@@ -139,4 +139,33 @@ public class JCRUtils {
         }
         return nodesPropertiesList;
     }
+
+    public Map<String, Object> getPropertiesFromNode(Node node){
+        Map<String, Object> nodeProperties = new HashMap<>();
+        try {
+            if (node != null) {
+                if (node.hasProperties()){
+                    Iterator<Property> propertiesIterator = node.getProperties();
+                    while(propertiesIterator.hasNext()){
+                        Property property = propertiesIterator.next();
+                        if (property.isMultiple()){
+                            Value[] values = property.getValues();
+                            ArrayList<String> listOfValues = new ArrayList<>();
+                            for(Value value : values){
+                                listOfValues.add(value.getString());
+                            }
+                            nodeProperties.put(property.getName(), listOfValues);
+                        }else{
+                            Value value = property.getValue();
+                            String stringValue = value.getString();
+                            nodeProperties.put(property.getName(), stringValue);
+                        }
+                    }
+                }
+            }
+        } catch (RepositoryException re){
+            re.printStackTrace();
+        }
+        return nodeProperties;
+    }
 }

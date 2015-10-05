@@ -67,11 +67,15 @@ public class Constants {
     public static final String SKILL_RATE = "skillrate";
 
     //projects
+    public static final String PROJECT = "project";
     public static final String PROJECTS = "projects";
+    public static final String CURRENT_PROJECT = "currentProject";
     public static final String START_DATE = "startdate";
     public static final String PROJECT_NAME_KEY = "projectname";
     public static final String PROJECT_DESCRIPTION_KEY = "projectdescription";
     public static final String PM_NAME = "projectmanager";
+    public static final String TEAM_KEY = "team";
+    public static final String TASK_KEY = "task";
 
     //tasks
 
