@@ -39,6 +39,8 @@ public class createNewUserServlet extends HttpServlet {
             throws ServletException, IOException {
         String show = BLANK;
             if ((null != response) && (request != null)){
+                request.setCharacterEncoding(UFT_8_KEY);
+                response.setCharacterEncoding(UFT_8_KEY);
                 String firstname = request.getParameter(FIRSTNAME_KEY).toString();
                 String lastname = request.getParameter(LASTNAME_KEY).toString();
                 String email = request.getParameter(EMAIL_KEY).toString();

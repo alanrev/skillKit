@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
 <%String user = request.getParameter("username");%>
+<%String success = request.getParameter("success");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Projects</title>
@@ -70,7 +71,17 @@
       <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
     } else { %>
     <%String error = request.getParameter("error");%>
-    <% if (error != null){
+    <%  if (success != null){
+            if (success.equals("0")) { %>
+                <div class="alert alert-success" role="alert">The project have been successfully created
+                </div><%
+            }
+            if (success.equals("1")) { %>
+                <div class="alert alert-success" role="alert">The team member assigned to a project
+                </div><%
+            }
+        }
+        if (error != null){
 
             if (error.equals("0")) { %>
                 <div class="alert alert-danger" role="alert">The user is not log in.
@@ -95,9 +106,24 @@
             }
             if (error.equals("5")) { %>
                 <div class="alert alert-danger" role="alert">
-                    <strong>Oops</strong> Can't create a new proyect, please check the create project's form fields
+                    <strong>Oops</strong> Can't create a new project, please check the create project's form fields
                 </div><%
             }
+            if (error.equals("6")) { %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops</strong> Can't create a new project, you need to be a Project Manager
+            </div><%
+                }
+            if (error.equals("7")) { %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops</strong> Can't assign team members to a project, you need to be a Project Manager
+            </div><%
+                }
+            if (error.equals("8")) { %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops</strong> Can't assign to project, please check the assign project's form fields
+            </div><%
+                }
     } %>
       <div ng-app="userInfo">
         <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">

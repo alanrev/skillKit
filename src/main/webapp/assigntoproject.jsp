@@ -103,7 +103,7 @@
             <div class="container" align="center">
                 <div ng-controller="getFreeUsersController" data-ng-init= "getDataFromServer('<%=user%>')">
                     <h2>Add team member to <%=project%></h2>
-                    <form class="form-control-static" action="AddTeamate" method="POST">
+                    <form class="form-control-static" action="AssignToProject" method="POST">
                         <div class="row" align="center" style="text-overflow: ellipsis;">
                             <input type="hidden"  name="username" id="username" value= <%= user %> />
                             <input type="hidden"  name="project" id="project" value= <%= project %> />

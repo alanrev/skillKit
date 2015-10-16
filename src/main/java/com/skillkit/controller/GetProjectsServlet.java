@@ -96,6 +96,7 @@ public class GetProjectsServlet extends HttpServlet {
                                                    if (team.hasNode(usernode.getName())){
                                                        Map<String, Object> properties =
                                                                jcrUtils.getPropertiesFromNode(proj);
+                                                       properties.put(NAME, proj.getName());
                                                        projects.add(properties);
                                                    }
                                                }

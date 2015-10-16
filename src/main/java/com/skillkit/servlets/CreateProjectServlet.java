@@ -37,6 +37,8 @@ public class CreateProjectServlet extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
             if ((request != null) && (response != null)) {
+                request.setCharacterEncoding(UFT_8_KEY);
+                response.setCharacterEncoding(UFT_8_KEY);
                 String username = request.getParameter(USERNAME_KEY);
                 String projectName = request.getParameter(PROJECT_NAME_KEY);
                 String projectdescription = request.getParameter(PROJECT_DESCRIPTION_KEY);
@@ -76,10 +78,12 @@ public class CreateProjectServlet extends HttpServlet {
                                             jcrSession.save();
                                             response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" +
                                                     EXCLAMATION_MARK + USERNAME_KEY
-                                                    + EQUAL_KEY + username);
+                                                    + EQUAL_KEY + username + "&success=0");
                                         }else{
                                             error = "5";
                                         }
+                                    }else{
+                                        error="6";
                                     }
                                 }else{
                                     error = "4";

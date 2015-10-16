@@ -43,6 +43,7 @@ public class Constants {
     public static final String EXCLAMATION_MARK = "?";
     public static final String EQUAL_KEY = "=";
     public static final String RESPONSE = "response";
+    public static final String UFT_8_KEY ="UTF-8";
 
 
     //users constants
@@ -57,6 +58,7 @@ public class Constants {
     //Role
     public static final String PROJECT_MANAGER_ROLE = "Project Manager";
     public static final String DEVELOPER_ROLE = "Developer";
+
 
     //skills
     public static final String SKILLS_NODE_KEY = "skills";
@@ -75,6 +77,7 @@ public class Constants {
     public static final String PROJECT_DESCRIPTION_KEY = "projectdescription";
     public static final String PM_NAME = "projectmanager";
     public static final String TEAM_KEY = "team";
+    public static final String TEAM_MATE = "teammate";
     public static final String TASK_KEY = "task";
 
     //tasks
