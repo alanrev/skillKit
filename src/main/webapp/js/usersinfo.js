@@ -48,3 +48,33 @@ function getNewRoleSkillController($scope, $http) {
 
     };
 }
+
+function getProjectsController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'GetProjects?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.projectData = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
+function getFreeUsersController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'GetFreeUsers?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.users = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
