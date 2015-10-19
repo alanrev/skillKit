@@ -106,10 +106,10 @@
       <table class="table  table-condensed table-striped">
         <thead>
         <tr>
-          <th>Project Name</th>
-          <th>Description</th>
-          <th>Start Date</th>
-          <th>Project Manager<th>
+          <th>Task Id</th>
+          <th>Task Name</th>
+          <th>Priority</th>
+          <th>Assign To<th>
           <th></th>
         </tr>
         </thead>

@@ -78,3 +78,27 @@ function getFreeUsersController($scope, $http) {
 
     };
 }
+
+function getProjectInfoController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project) {
+        $http({
+            method: 'POST',
+            url: 'projectInfo?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            for (var i = 0; i < data.team.length; i++){
+                var memberRole = data.team[i].role;
+                if (memberRole == "1"){
+                    data.team[i].role = "Project Manager";
+                }
+                if (memberRole == "2"){
+                    data.team[i].role = "Developer";
+                }
+            }
+            $scope.project = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
