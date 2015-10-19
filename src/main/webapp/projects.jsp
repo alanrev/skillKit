@@ -141,12 +141,14 @@
                 </thead>
                 <tbody>
                 <tr class="active" ng-repeat="project in projectData">
-                    <td><strong>{{project.name}}</strong></td>
+                    <td><a href="projectprofile.jsp?username=<%=user%>&project={{project.name}}">
+                        <strong>{{project.name}}</strong></a>
+                    </td>
                     <td><p>{{project.projectdescription}}</p></td>
                     <td>{{project.startdate}}</td>
                     <td>{{project.projectmanager}}</td>
                     <td>
-                        <a class="btn btn-primary btn-block" href="#?username<%=user%>&project={{project.name}}">
+                        <a class="btn btn-primary btn-block" href="tasks.jsp?username=<%=user%>&project={{project.name}}">
                             Tasks
                         </a>
                         <a class="btn btn-primary btn-block"

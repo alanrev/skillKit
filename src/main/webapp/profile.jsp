@@ -43,7 +43,7 @@
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="profile?username=<%= user%>">
+                                    <a href="profile.jsp?username=<%= user%>">
                                         <img src="./appImages/profile.png">
                                         Profile
                                     </a>
@@ -68,14 +68,17 @@
         <%-- Navbar End --%>
                 <div ng-app="userInfo">
                     <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
-                        <h2>{{person.firstName}} {{person.lastName}} </h2>
-                        <h4>{{person.role}}</h4>
-                        <br>
-                        <h4>Contact information</h4>
-                        <p>email : {{person.email}}</p>
-                    </div>
-                    <div class="row">
-                        <a href="newskill.jsp?username=<%=user%>" class="btn btn-primary btn-lg btn-block"> Add a new Skill</a>
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h2>{{person.firstName}} {{person.lastName}} </h2>
+                                <h4>{{person.role}}</h4>
+                                <h4>Contact information</h4>
+                                <p>email : {{person.email}}</p>
+                                <p><a href="newskill.jsp?username=<%=user%>" class="btn btn-primary" role="button">Add Skill</a>
+                                   <a href="#" class="btn btn-default" role="button">Edit Profile</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="container">
                         <h2>My Skills</h2>
