@@ -49,6 +49,21 @@ function getNewRoleSkillController($scope, $http) {
     };
 }
 
+function getDevSkillsController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'getDevSkills?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.skills = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
 function getProjectsController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {
