@@ -159,18 +159,23 @@
           <th>Task Name</th>
           <th>Priority</th>
           <th>Status</th>
-          <th>Assign To<th>
+          <th>Assign To<th
+          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr class="active" ng-repeat="task in tasks">
-          <td><strong>{{task.id}}</strong></td>
-          <td>{{task.name}}</td>
-          <td>{{task.priority}}</td>
-          <td>{{task.status}}</td>
-          <td>
-              {{task.Assign}}
-          </td>
+                <td><strong>{{task.id}}</strong></td>
+                <td>{{task.name}}</td>
+                <td>{{task.priority}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.Assign}}</td>
+                <td><a href="task.jsp?username=<%=user%>&project=<%=project%>&id={{task.id}}"
+                        class="btn btn-primary btn-lg btn-block">
+                        view Task
+                    </a>
+                </td>
+            </a>
         </tr>
         </tbody>
       </table>

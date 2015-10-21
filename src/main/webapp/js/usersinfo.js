@@ -133,14 +133,14 @@ function GetProjectTasksController($scope, $http) {
     };
 }
 
-function getTaskInfoController($scope, $http) {
+function GetTaskInfoController($scope, $http) {
 
-    $scope.getDataFromServer = function (username, project) {
+    $scope.getDataFromServer = function (username, project, id) {
         $http({
             method: 'POST',
-            url: 'GetFreeUsers?username=' + username + '&project=' + project
+            url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
-            $scope.users = data;
+            $scope.task = data;
         }).error(function (data, status, headers, config) {
 
         });
