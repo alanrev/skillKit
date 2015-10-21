@@ -117,3 +117,33 @@ function getProjectInfoController($scope, $http) {
 
     };
 }
+
+function GetProjectTasksController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project) {
+        $http({
+            method: 'POST',
+            url: 'GetProjectTasks?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            $scope.tasks = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
+function getTaskInfoController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project) {
+        $http({
+            method: 'POST',
+            url: 'GetFreeUsers?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            $scope.users = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}

@@ -107,10 +107,7 @@ public class CreateTaskServlet extends HttpServlet {
                node.setProperty(MAIN_SKILL, mainSkill);
            }
            if ((priority != null) && (!priority.isEmpty())) {
-               node.setProperty(PRIORITY, name);
-           }
-           if ((priority != null) && (!priority.isEmpty())) {
-               node.setProperty(PRIORITY, name);
+               node.setProperty(PRIORITY, priority);
            }
            if ((skillRate != null) && (!skillRate.isEmpty())) {
                node.setProperty(SKILL_RATE, skillRate);

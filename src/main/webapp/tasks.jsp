@@ -11,7 +11,7 @@
 <%String project = request.getParameter("project");%>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Projects</title>
+    <title>Tasks</title>
     <link rel='stylesheet' href='./css/bootstrap.min.css'>
     <link rel='stylesheet' href='./css/custom.css'>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -106,7 +106,7 @@
         }
     }%>
   <div ng-app="userInfo">
-    <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
+    <div ng-controller="GetProjectTasksController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
       <h2><%=project%>'s Task </h2>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">New Task</button>
 
@@ -160,23 +160,17 @@
           <th>Priority</th>
           <th>Status</th>
           <th>Assign To<th>
-          <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr class="active" ng-repeat="project in projectData">
-          <td><strong>{{project.name}}</strong></td>
-          <td><p>{{project.projectdescription}}</p></td>
-          <td>{{project.startdate}}</td>
-          <td>{{project.projectmanager}}</td>
+        <tr class="active" ng-repeat="task in tasks">
+          <td><strong>{{task.id}}</strong></td>
+          <td>{{task.name}}</td>
+          <td>{{task.priority}}</td>
+          <td>{{task.status}}</td>
           <td>
-            <a class="btn btn-primary btn-block" href="#?username<%=user%>">Tasks</a>
-            <a class="btn btn-primary btn-block">Assign team member</a>
+              {{task.Assign}}
           </td>
-            <td>
-                <a class="btn btn-primary btn-block" href="#?username<%=user%>">Tasks</a>
-                <a class="btn btn-primary btn-block">Assign team member</a>
-            </td>
         </tr>
         </tbody>
       </table>
