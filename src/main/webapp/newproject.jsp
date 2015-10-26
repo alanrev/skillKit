@@ -7,8 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
-<%String user = request.getParameter("username");%>
-<head>
+<%String user = null;
+  Cookie[] cookies = request.getCookies();
+  if (cookies != null) {
+    for (Cookie cookie : cookies) {
+      if (cookie.getName().equals("username")) {
+        user = cookie.getValue();
+      }
+    }
+  }
+%><head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Add a New Project</title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
@@ -26,19 +34,19 @@
         <div class="navbar-collapse collapse in" style="height: auto;">
           <ul class="nav navbar-nav">
             <li>
-              <a href="home.jsp?username=<%= user%>">
+              <a href="home.jsp">
                 <img src="./appImages/logo.png" width="48" height="48">
                 Home
               </a>
             </li>
             <li>
-              <a href="#?username=<%= user%>">
+              <a href="#">
                 <img src="./appImages/task.png">
                 My Task
               </a>
             </li>
             <li>
-              <a href="projects.jsp?username=<%= user%>">
+              <a href="projects.jsp">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -46,13 +54,13 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="profile.jsp?username=<%= user%>">
+              <a href="profile.jsp">
                 <img src="./appImages/profile.png">
                 Profile
               </a>
             </li>
             <li>
-              <a href="LogoutServlet?username=<%= user%>">
+              <a href="LogoutServlet">
                 <img src="./appImages/log_out-48.png">
                 Log Out
               </a>

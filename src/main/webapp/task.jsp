@@ -7,14 +7,25 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
-<%String user = request.getParameter("username");%>
+<%String user = null;
+  Cookie[] cookies = request.getCookies();
+  if (cookies != null) {
+    for (Cookie cookie : cookies) {
+      if (cookie.getName().equals("username")) {
+        user = cookie.getValue();
+      }
+    }
+  }
+%>
+<%String project = request.getParameter("project");%>
+<%String id = request.getParameter("id");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Tasks</title>
+  <title><%=project%></title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
   <link rel='stylesheet' href='./css/custom.css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
-
 <body>
 <%-- Navbar Start --%>
 <nav class="navbar-wrapper">
@@ -25,19 +36,19 @@
         <div class="navbar-collapse collapse in" style="height: auto;">
           <ul class="nav navbar-nav">
             <li>
-              <a href="home.jsp?username=<%= user%>">
+              <a href="home.jsp">
                 <img src="./appImages/logo.png" width="48" height="48">
                 Home
               </a>
             </li>
             <li>
-              <a href="#?username=<%= user%>">
+              <a href="#">
                 <img src="./appImages/task.png">
                 My Task
               </a>
             </li>
             <li>
-              <a href="projects.jsp?username=<%= user%>">
+              <a href="projects.jsp">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -45,13 +56,13 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="profile.jsp?username=<%= user%>">
+              <a href="profile.jsp">
                 <img src="./appImages/profile.png">
                 Profile
               </a>
             </li>
             <li>
-              <a href="LogoutServlet?username=<%= user%>">
+              <a href="LogoutServlet">
                 <img src="./appImages/log_out-48.png">
                 Log Out
               </a>
@@ -63,80 +74,93 @@
   </div>
   </div>
 </nav>
-
-<%-- Navbar End --%>
 <div class="container" align="center">
   <% if (user == null){ %>
   <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
 } else { %>
-  <%String error = request.getParameter("error");%>
-  <% if (error != null){
-
-    if (error.equals("0")) { %>
-  <div class="alert alert-danger" role="alert">The user is not log in.
-    <a href="index.jsp" class="alert-link">Please log in</a>
-  </div><%
-  }
-  if (error.equals("1")) { %>
-  <div class="alert alert-danger" role="alert">Session lost.
-    <a href="index.jsp" class="alert-link">Please log in</a>
-  </div><%
-  }
-  if (error.equals("2")) { %>
-  <div class="alert alert-danger" role="alert">Session lost.
-    <a href="index.jsp" class="alert-link">Please log in</a>
-  </div><%
-  }
-  if (error.equals("3")) { %>
-  <div class="alert alert-danger" role="alert"><strong>Oops</strong> Server connection has lost</div><%
-  }
-  if (error.equals("4")) { %>
-  <div class="alert alert-danger" role="alert">Session lost, please log in</div><%
-  }
-  if (error.equals("5")) { %>
-  <div class="alert alert-danger" role="alert">
-    <strong>Oops</strong> Can't create a new proyect, please check the create project's form fields
-  </div><%
-    }
-  } %>
+  <%-- Navbar End --%>
   <div ng-app="userInfo">
-    <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
-      <h2>Projects</h2>
-      <a href="newproject.jsp?username=<%= user%>">Create new project</a>
-      <table class="table  table-condensed table-striped">
-        <thead>
-        <tr>
-          <th>Project Name</th>
-          <th>Description</th>
-          <th>Start Date</th>
-          <th>Project Manager<th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="active" ng-repeat="project in projectData">
-          <td><strong>{{project.name}}</strong></td>
-          <td><p>{{project.projectdescription}}</p></td>
-          <td>{{project.startdate}}</td>
-          <td>{{project.projectmanager}}</td>
-          <td>
-            <a class="btn btn-primary btn-block" href="#?username<%=user%>">Tasks</a>
-            <a class="btn btn-primary btn-block">Assign team member</a>
-          <td>
-        </tr>
-        </tbody>
-      </table>
+    <div ng-controller="GetTaskInfoController" data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>Task-{{task.id}} {{task.name}}</h3>
+          <p>{{task.description}}</p>
+          <h5>Assign to: {{task.Assign}}</h5>
+          <h5>Main Skill Required: {{task.mainSkill}}</h5>
+          <progress value="{{task.skillrate}}" max="5"></progress> {{task.skillrate}} / 5
+          <h5>Hours:{{task.hours}} hours</h5>
+          <h5>Priority: {{task.priority}}</h5>
+          <h5>Status:{{task.status}}</h5>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Assign To</button>
+
+          <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <h3>Assign Task</h3>
+                <form class="form-control-static" action="AsignTask" method="POST"
+                      ng-controller="#" data-ng-init= "getDataFromServer('<%=user%>')">
+
+                    <input type="hidden"  name="username" id="username" value= <%= user %> />
+                    <input type="hidden"  name="project" id="project" value= <%= project %> />
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="net" /> .Net
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="java" /> Java
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="c" /> C/C++
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="php" /> PHP
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="perl" /> Perl
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="ruby" /> Ruby
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="python" /> Python
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="javascript" /> Javascript
+                              </label>
+                          </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Assign Task</button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <%
-    }
-  %>
 </div>
-
+<%
+  }
+%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/usersinfo.js"></script>
 </body>
 </html>
+

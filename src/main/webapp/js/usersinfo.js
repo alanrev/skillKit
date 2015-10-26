@@ -10,6 +10,12 @@ function userInfoController($scope, $http) {
             method : 'GET',
             url : 'usersInfo?username='+ username
         }).success(function(data, status, headers, config) {
+            if (data.role == "Developer"){
+                var createP = document.getElementById('pm');
+                if (createP != null){
+                    createP.style.display = 'none';
+                }
+            }
             $scope.person = data;
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
@@ -42,6 +48,21 @@ function getNewRoleSkillController($scope, $http) {
             url: 'GetUserRoleSkills?username=' + username
         }).success(function (data, status, headers, config) {
             $scope.skillData = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
+function getDevSkillsController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'getDevSkills?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.skills = data;
         }).error(function (data, status, headers, config) {
 
         });
@@ -96,6 +117,36 @@ function getProjectInfoController($scope, $http) {
                 }
             }
             $scope.project = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
+function GetProjectTasksController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project) {
+        $http({
+            method: 'POST',
+            url: 'GetProjectTasks?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            $scope.tasks = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
+function GetTaskInfoController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project, id) {
+        $http({
+            method: 'POST',
+            url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
+        }).success(function (data, status, headers, config) {
+            $scope.task = data;
         }).error(function (data, status, headers, config) {
 
         });

@@ -78,8 +78,17 @@ public class Constants {
     public static final String PM_NAME = "projectmanager";
     public static final String TEAM_KEY = "team";
     public static final String TEAM_MATE = "teammate";
-    public static final String TASK_KEY = "task";
 
     //tasks
-
+    public static final String TASKS_KEY = "tasks";
+    public static final String TASK_KEY = "task";
+    public static final String PRIORITY = "priority";
+    public static final String STATUS_KEY = "status";
+    public static final String DESCRIPTION_KEY = "description";
+    public static final String MAIN_SKILL = "mainSkill";
+    public static final String HOURS_KEY = "hours";
+    public static final String ASSIGN = "Assign";
+    public static final String UNASSINGED = "Unassigned";
+    public static final String STATUS_CREATED = "Created";
+    public static final String ID = "id";
 }

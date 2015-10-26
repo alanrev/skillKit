@@ -7,7 +7,16 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
-<%String user = request.getParameter("username");%>
+<%String user = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("username")) {
+                user = cookie.getValue();
+            }
+        }
+    }
+%>
 <%String success = request.getParameter("success");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,50 +28,50 @@
 <body>
 <%-- Navbar Start --%>
 <nav class="navbar-wrapper">
-  <div class="container">
-    <br>
-    <div class="navbar navbar-inverse" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-collapse collapse in" style="height: auto;">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="home.jsp?username=<%= user%>">
-                <img src="./appImages/logo.png" width="48" height="48">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#?username=<%= user%>">
-                <img src="./appImages/task.png">
-                My Task
-              </a>
-            </li>
-            <li>
-              <a href="projects.jsp?username=<%= user%>">
-                <img src="./appImages/projects.png"  width="48" height="48">
-                Projects
-              </a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="profile.jsp?username=<%= user%>">
-                <img src="./appImages/profile.png">
-                Profile
-              </a>
-            </li>
-            <li>
-              <a href="LogoutServlet?username=<%= user%>">
-                <img src="./appImages/log_out-48.png">
-                Log Out
-              </a>
-            </li>
-          </ul>
+    <div class="container">
+        <br>
+        <div class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse in" style="height: auto;">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="home.jsp">
+                                <img src="./appImages/logo.png" width="48" height="48">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="./appImages/task.png">
+                                My Task
+                            </a>
+                        </li>
+                        <li>
+                            <a href="projects.jsp">
+                                <img src="./appImages/projects.png"  width="48" height="48">
+                                Projects
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="profile.jsp">
+                                <img src="./appImages/profile.png">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="LogoutServlet">
+                                <img src="./appImages/log_out-48.png">
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  </div>
+    </div>
 </nav>
 
 <%-- Navbar End --%>
@@ -126,41 +135,42 @@
                 }
     } %>
       <div ng-app="userInfo">
-        <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
-          <h2>Projects</h2>
-          <a href="newproject.jsp?username=<%= user%>">Create new project</a>
-            <table class="table  table-condensed table-striped">
-                <thead>
-                <tr>
-                    <th>Project Name</th>
-                    <th>Description</th>
-                    <th>Start Date</th>
-                    <th>Project Manager<th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="active" ng-repeat="project in projectData">
-                    <td><a href="projectprofile.jsp?username=<%=user%>&project={{project.name}}">
-                        <strong>{{project.name}}</strong></a>
-                    </td>
-                    <td><p>{{project.projectdescription}}</p></td>
-                    <td>{{project.startdate}}</td>
-                    <td>{{project.projectmanager}}</td>
-                    <td>
-                        <a class="btn btn-primary btn-block" href="tasks.jsp?username=<%=user%>&project={{project.name}}">
-                            Tasks
-                        </a>
-                        <a class="btn btn-primary btn-block"
-                           href="assigntoproject.jsp?username=<%=user%>&project={{project.name}}">
-                            Assign team member
-                        </a>
-                    <td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-      </div>
+          <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
+            <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
+              <h2>Projects</h2>
+                  <a id="pm" href="newproject.jsp">Create new project</a>
+                <table class="table  table-condensed table-striped">
+                    <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>Project Manager<th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="active" ng-repeat="project in projectData">
+                        <td><a href="projectprofile.jsp?project={{project.name}}">
+                            <strong>{{project.name}}</strong></a>
+                        </td>
+                        <td><p>{{project.projectdescription}}</p></td>
+                        <td>{{project.startdate}}</td>
+                        <td>{{project.projectmanager}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-block" href="tasks.jsp?project={{project.name}}">
+                                Tasks
+                            </a>
+                            <a class="btn btn-primary btn-block" id="pm-assign"
+                               href="assigntoproject.jsp?project={{project.name}}">
+                                Assign team member
+                            </a>
+                        <td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
 
     <%
       }

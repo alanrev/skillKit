@@ -77,8 +77,7 @@ public class CreateProjectServlet extends HttpServlet {
                                             project.setProperty(PM_NAME, firstname + EMPTY_SPACE + lastname);
                                             jcrSession.save();
                                             response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" +
-                                                    EXCLAMATION_MARK + USERNAME_KEY
-                                                    + EQUAL_KEY + username + "&success=0");
+                                                    EXCLAMATION_MARK + "success=0");
                                         }else{
                                             error = "5";
                                         }
@@ -98,13 +97,11 @@ public class CreateProjectServlet extends HttpServlet {
                         error = "2";
                     }
                     if (!error.equals(BLANK)) {
-                        response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" + EXCLAMATION_MARK + USERNAME_KEY
-                                + EQUAL_KEY + username + AND + ERROR
+                        response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" + EXCLAMATION_MARK + ERROR
                                 + EQUAL_KEY + error);
                     }
                 } catch (RepositoryException re){
-                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" + EXCLAMATION_MARK + USERNAME_KEY
-                            + EQUAL_KEY + username + AND + ERROR
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp" + EXCLAMATION_MARK + ERROR
                             + EQUAL_KEY + 3);
                     re.printStackTrace();
                 }

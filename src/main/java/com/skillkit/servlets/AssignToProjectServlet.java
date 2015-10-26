@@ -81,9 +81,9 @@ public class AssignToProjectServlet extends HttpServlet {
                 error = "0";
             }
             if (error.equals(BLANK)) {
-                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp?username="+ username+"&success="+success);
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp?"+ "success="+success);
             }else{
-                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp?username="+ username+"&error="+error);
+                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "projects.jsp?"+ "error="+error);
             }
         }
     }
