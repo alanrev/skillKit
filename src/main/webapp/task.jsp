@@ -99,7 +99,7 @@
                 <h3>Assign Task</h3>
                 <form class="form-control-static" action="AsignTask" method="POST"
                       ng-controller="#" data-ng-init= "getDataFromServer('<%=user%>')">
-                  < class="row" align="center" style="text-overflow: ellipsis;">
+
                     <input type="hidden"  name="username" id="username" value= <%= user %> />
                     <input type="hidden"  name="project" id="project" value= <%= project %> />
 
@@ -144,7 +144,7 @@
                               </label>
                           </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Assign Task</button>
-                  </div>
+
                 </form>
               </div>
             </div>

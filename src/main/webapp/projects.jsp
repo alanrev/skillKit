@@ -138,8 +138,7 @@
           <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
             <div ng-controller="getProjectsController" data-ng-init= "getDataFromServer('<%=user%>')">
               <h2>Projects</h2>
-                <div ng-if="person.role === 'Project Manager'">{{person.role}}</div>
-                  <a href="newproject.jsp">Create new project</a>
+                  <a id="pm" href="newproject.jsp">Create new project</a>
                 <table class="table  table-condensed table-striped">
                     <thead>
                     <tr>
@@ -162,7 +161,7 @@
                             <a class="btn btn-primary btn-block" href="tasks.jsp?project={{project.name}}">
                                 Tasks
                             </a>
-                            <a class="btn btn-primary btn-block"
+                            <a class="btn btn-primary btn-block" id="pm-assign"
                                href="assigntoproject.jsp?project={{project.name}}">
                                 Assign team member
                             </a>

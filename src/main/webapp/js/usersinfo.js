@@ -10,6 +10,12 @@ function userInfoController($scope, $http) {
             method : 'GET',
             url : 'usersInfo?username='+ username
         }).success(function(data, status, headers, config) {
+            if (data.role == "Developer"){
+                var createP = document.getElementById('pm');
+                if (createP != null){
+                    createP.style.display = 'none';
+                }
+            }
             $scope.person = data;
         }).error(function(data, status, headers, config) {
             // called asynchronously if an error occurs

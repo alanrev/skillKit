@@ -62,8 +62,7 @@ public class CreateTaskServlet extends HttpServlet {
                                         addProperties(name, projectDescription, priority,
                                                 mainSkill, skillRate, hours, task, jcrSession);
                                         response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
-                                                EXCLAMATION_MARK + USERNAME_KEY
-                                                + EQUAL_KEY + username + AND + PROJECT  + EQUAL_KEY + projectName
+                                                EXCLAMATION_MARK + PROJECT  + EQUAL_KEY + projectName
                                                 + "&success=0");
                                     } else {
                                         error = "3";
@@ -87,8 +86,7 @@ public class CreateTaskServlet extends HttpServlet {
                 }
             if (!(error.equals(BLANK))) {
                 response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
-                        EXCLAMATION_MARK + USERNAME_KEY
-                        + EQUAL_KEY + username + AND + PROJECT  + EQUAL_KEY + projectName + "&error=" + error);
+                        EXCLAMATION_MARK + PROJECT  + EQUAL_KEY + projectName + "&error=" + error);
             }
         }
     }
