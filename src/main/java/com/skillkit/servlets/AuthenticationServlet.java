@@ -4,6 +4,7 @@ package com.skillkit.servlets;
 import javax.jcr.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +35,10 @@ public class AuthenticationServlet extends HttpServlet {
                 String ip = request.getRemoteAddr();
                 Node authenticatedNode = authenticate(username, password, ip);
                 if (authenticatedNode != null) {
-                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "home.jsp" + EXCLAMATION_MARK + USERNAME_KEY
-                            + EQUAL_KEY+ username);
+                    Cookie sessionCookie = new Cookie(USERNAME_KEY, username);
+                    sessionCookie.setMaxAge(-1);
+                    response.addCookie(sessionCookie);
+                    response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "home.jsp");
                 } else {
                     response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp?error=1");
                 }

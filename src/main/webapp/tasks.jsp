@@ -7,7 +7,16 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
-<%String user = request.getParameter("username");%>
+<%String user = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("username")) {
+                user = cookie.getValue();
+            }
+        }
+    }
+%>
 <%String project = request.getParameter("project");%>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,50 +29,50 @@
 <body>
 <%-- Navbar Start --%>
 <nav class="navbar-wrapper">
-  <div class="container">
-    <br>
-    <div class="navbar navbar-inverse" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-collapse collapse in" style="height: auto;">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="home.jsp?username=<%= user%>">
-                <img src="./appImages/logo.png" width="48" height="48">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#?username=<%= user%>">
-                <img src="./appImages/task.png">
-                My Task
-              </a>
-            </li>
-            <li>
-              <a href="projects.jsp?username=<%= user%>">
-                <img src="./appImages/projects.png"  width="48" height="48">
-                Projects
-              </a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="profile.jsp?username=<%= user%>">
-                <img src="./appImages/profile.png">
-                Profile
-              </a>
-            </li>
-            <li>
-              <a href="LogoutServlet?username=<%= user%>">
-                <img src="./appImages/log_out-48.png">
-                Log Out
-              </a>
-            </li>
-          </ul>
+    <div class="container">
+        <br>
+        <div class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse in" style="height: auto;">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="home.jsp">
+                                <img src="./appImages/logo.png" width="48" height="48">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="./appImages/task.png">
+                                My Task
+                            </a>
+                        </li>
+                        <li>
+                            <a href="projects.jsp">
+                                <img src="./appImages/projects.png"  width="48" height="48">
+                                Projects
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="profile.jsp">
+                                <img src="./appImages/profile.png">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="LogoutServlet">
+                                <img src="./appImages/log_out-48.png">
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  </div>
+    </div>
 </nav>
 
 <%-- Navbar End --%>
@@ -74,7 +83,7 @@
     <%String error = request.getParameter("error");%>
     <%String success = request.getParameter("success");%>
   <% if (project == null) {
-     response.sendRedirect("projects.jsp?username="+user);
+     response.sendRedirect("projects.jsp");
     }else{
       if (success != null){
             if (success.equals("0")) { %>
@@ -159,7 +168,7 @@
           <th>Task Name</th>
           <th>Priority</th>
           <th>Status</th>
-          <th>Assign To<th
+          <th>Assign To</th>
           <th></th>
         </tr>
         </thead>
@@ -170,7 +179,7 @@
                 <td>{{task.priority}}</td>
                 <td>{{task.status}}</td>
                 <td>{{task.Assign}}</td>
-                <td><a href="task.jsp?username=<%=user%>&project=<%=project%>&id={{task.id}}"
+                <td><a href="task.jsp?project=<%=project%>&id={{task.id}}"
                         class="btn btn-primary btn-lg btn-block">
                         view Task
                     </a>

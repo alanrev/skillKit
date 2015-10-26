@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import javax.jcr.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,15 @@ public class LogoutServlet extends HttpServlet {
             if(response != null){
                 try{
                     Session jcrSession = repoLogin();
-                    String user = request.getParameter(USERNAME_KEY);
+                    String user = BLANK;
+                    Cookie[] cookies = request.getCookies();
+                    if (cookies != null) {
+                        for (Cookie cookie : cookies) {
+                            if (cookie.getName().equals(USERNAME_KEY)) {
+                                user = cookie.getValue();
+                            }
+                        }
+                    }
                     String validate = user + DASH + request.getRemoteAddr();
                     if(jcrSession != null){
                         Node root = jcrSession.getRootNode();
@@ -43,6 +52,11 @@ public class LogoutServlet extends HttpServlet {
                             jcrSession.save();
                         }
                         repoLogout(jcrSession);
+                        Cookie cookie = new Cookie(USERNAME_KEY, null);
+                        cookie.setPath(SKILLKIT_HOST_PATH + "index.jsp");
+                        cookie.setHttpOnly(true);
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
                         response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "index.jsp");
                     }else {
                     }

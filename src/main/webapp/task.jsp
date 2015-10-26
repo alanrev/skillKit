@@ -7,7 +7,16 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
-<%String user = request.getParameter("username");%>
+<%String user = null;
+  Cookie[] cookies = request.getCookies();
+  if (cookies != null) {
+    for (Cookie cookie : cookies) {
+      if (cookie.getName().equals("username")) {
+        user = cookie.getValue();
+      }
+    }
+  }
+%>
 <%String project = request.getParameter("project");%>
 <%String id = request.getParameter("id");%>
 <head>
@@ -27,19 +36,19 @@
         <div class="navbar-collapse collapse in" style="height: auto;">
           <ul class="nav navbar-nav">
             <li>
-              <a href="home.jsp?username=<%= user%>">
+              <a href="home.jsp">
                 <img src="./appImages/logo.png" width="48" height="48">
                 Home
               </a>
             </li>
             <li>
-              <a href="#?username=<%= user%>">
+              <a href="#">
                 <img src="./appImages/task.png">
                 My Task
               </a>
             </li>
             <li>
-              <a href="projects.jsp?username=<%= user%>">
+              <a href="projects.jsp">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -47,13 +56,13 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="profile.jsp?username=<%= user%>">
+              <a href="profile.jsp">
                 <img src="./appImages/profile.png">
                 Profile
               </a>
             </li>
             <li>
-              <a href="LogoutServlet?username=<%= user%>">
+              <a href="LogoutServlet">
                 <img src="./appImages/log_out-48.png">
                 Log Out
               </a>
@@ -78,6 +87,7 @@
           <p>{{task.description}}</p>
           <h5>Assign to: {{task.Assign}}</h5>
           <h5>Main Skill Required: {{task.mainSkill}}</h5>
+          <progress value="{{task.skillrate}}" max="5"></progress> {{task.skillrate}} / 5
           <h5>Hours:{{task.hours}} hours</h5>
           <h5>Priority: {{task.priority}}</h5>
           <h5>Status:{{task.status}}</h5>
@@ -89,15 +99,50 @@
                 <h3>Assign Task</h3>
                 <form class="form-control-static" action="AsignTask" method="POST"
                       ng-controller="#" data-ng-init= "getDataFromServer('<%=user%>')">
-                  <div class="row" align="center" style="text-overflow: ellipsis;">
+                  < class="row" align="center" style="text-overflow: ellipsis;">
                     <input type="hidden"  name="username" id="username" value= <%= user %> />
                     <input type="hidden"  name="project" id="project" value= <%= project %> />
-                    <select class="form-control" name="assignTo">
-                      <option>Select team mate</option>
-                      <option value="High">High</option>
-                      <option value="Normal">Normal</option>
-                      <option value="Low">Low</option>
-                    </select>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="net" /> .Net
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="java" /> Java
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="c" /> C/C++
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="php" /> PHP
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="perl" /> Perl
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="ruby" /> Ruby
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="python" /> Python
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" name="languages[]" value="javascript" /> Javascript
+                              </label>
+                          </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Assign Task</button>
                   </div>
                 </form>
