@@ -153,3 +153,17 @@ function GetTaskInfoController($scope, $http) {
 
     };
 }
+
+function GetRecommendedUsersController($scope, $http) {
+    $scope.getDataFromServer = function (username, project, id) {
+        $http({
+            method: 'POST',
+            url: 'GetRecommendedUsers?username=' + username + '&project=' + project + '&id=' + id
+        }).success(function (data, status, headers, config) {
+            $scope.users = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}

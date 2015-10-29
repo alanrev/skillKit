@@ -98,51 +98,50 @@
               <div class="modal-content">
                 <h3>Assign Task</h3>
                 <form class="form-control-static" action="AsignTask" method="POST"
-                      ng-controller="#" data-ng-init= "getDataFromServer('<%=user%>')">
-
-                    <input type="hidden"  name="username" id="username" value= <%= user %> />
-                    <input type="hidden"  name="project" id="project" value= <%= project %> />
-
-                          <div class="checkbox">
+                      ng-controller="GetRecommendedUsersController"
+                      data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')"
+                        >
+                    <div class="row">
+                        <input type="hidden"  name="username" id="username" value= <%= user %> />
+                        <input type="hidden"  name="project" id="project" value= <%= project %> />
+                        <div class="col-xs-6">
+                            <p>Recommended</p>
+                            <div ng-repeat="user in users.UsersFromProject">
                               <label>
-                                  <input type="checkbox" name="languages[]" value="net" /> .Net
+                                  <input type="checkbox" name="users[]" value="net" data-toggle="popover"
+                                         title="Popover title"
+                                         data-content="And here's some amazing content. It's very engaging. Right?" />
+                                  <a role="button" data-toggle="collapse" href="#collapse{{$index}}a" aria-expanded="false" aria-controls="collapseExample">
+                                      {{user.firstname}} {{user.lastname}}
+                                  </a>
+                                  <div class="collapse" id="collapse{{$index}}a">
+                                      <div class="well">
+                                          <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
+                                      </div>
+                                  </div>
                               </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="java" /> Java
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="c" /> C/C++
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="php" /> PHP
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="perl" /> Perl
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="ruby" /> Ruby
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="python" /> Python
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="javascript" /> Javascript
-                              </label>
-                          </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <p>Other Options</p>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="user in users.otherUsers">
+                                    <a role="button" data-toggle="collapse" href="#collapse{{$index}}" aria-expanded="false" aria-controls="collapseExample">
+                                        {{user.firstname}} {{user.lastname}}
+                                    </a>
+                                    <div class="collapse" id="collapse{{$index}}">
+                                        <div class="well">
+                                            <div ng-if="user.currentProject != null">
+                                                <p>Current Project</p>
+                                                <h4>{{user.currentProject}}</h4>
+                                            </div>
+                                            <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Assign Task</button>
 
                 </form>

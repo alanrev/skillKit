@@ -57,6 +57,7 @@ public class GetTaskInfoServlet  extends HttpServlet {
                     }
                 }
             }
+            jcrUtils.repoLogout(jcrSession);
         }
     }
 
