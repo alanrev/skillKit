@@ -179,7 +179,11 @@
                         <td>{{task.name}}</td>
                         <td>{{task.priority}}</td>
                         <td>{{task.status}}</td>
-                        <td>{{task.Assign}}</td>
+                        <td><ul>
+                            <li ng-repeat=" user in task.assignedUsers" >
+                                {{user}}
+                            </li>
+                        </ul></td>
                         <td><a href="task.jsp?project=<%=project%>&id={{task.id}}"
                                 class="btn btn-primary btn-lg btn-block">
                                 view Task

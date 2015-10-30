@@ -89,6 +89,7 @@ public class Constants {
     public static final String HOURS_KEY = "hours";
     public static final String ASSIGN = "Assign";
     public static final String UNASSINGED = "Unassigned";
+    public static final String ASSIGNED_USERS = "assignedUsers";
     public static final String STATUS_CREATED = "Created";
     public static final String ID = "id";
     public static final String USERS_FROM_PROJECT = "UsersFromProject";
