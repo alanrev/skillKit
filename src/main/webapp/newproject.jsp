@@ -40,9 +40,11 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="mytasks.jsp">
+
                 <img src="./appImages/task.png">
-                My Task
+                My Tasks
+
               </a>
             </li>
             <li>
@@ -80,7 +82,7 @@
   <%
 } else { %>
 <div class="container" align="center">
-  <h2>Create Project</h2>
+  <h2>Create Project </h2>
     <form class="form-control-static" action="CreateProject" method="POST">
       <div class="row" align="center" style="text-overflow: ellipsis;">
         <input type="hidden"  name="username" id="username" value= <%= user %> />

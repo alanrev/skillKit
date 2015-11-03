@@ -42,9 +42,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="mytasks.jsp">
                                 <img src="./appImages/task.png">
-                                My Task
+                                My Tasks
                             </a>
                         </li>
                         <li>

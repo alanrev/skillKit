@@ -35,19 +35,19 @@
         <div class="navbar-collapse collapse in" style="height: auto;">
           <ul class="nav navbar-nav">
             <li>
-              <a href="home.jsp?username=<%= user%>">
+              <a href="home.jsp">
                 <img src="./appImages/logo.png" width="48" height="48">
                 Home
               </a>
             </li>
             <li>
-              <a href="#?username=<%= user%>">
+              <a href="mytasks.jsp">
                 <img src="./appImages/task.png">
-                My Task
+                My Tasks
               </a>
             </li>
             <li>
-              <a href="projects.jsp?username=<%= user%>">
+              <a href="projects.jsp">
                 <img src="./appImages/projects.png"  width="48" height="48">
                 Projects
               </a>
@@ -55,7 +55,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="profile.jsp?username=<%= user%>">
+              <a href="profile.jsp">
                 <img src="./appImages/profile.png">
                 Profile
               </a>

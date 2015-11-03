@@ -106,7 +106,7 @@
                     {{user}}
                   </li>
                 </ul></td>
-                <td><a href="task.jsp?project=<%=project%>&id={{task.id}}"
+                <td><a href="task.jsp?project={{project.project}}&id={{task.id}}"
                        class="btn btn-primary btn-lg btn-block">
                   view Task
                 </a>

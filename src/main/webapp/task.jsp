@@ -42,10 +42,10 @@
               </a>
             </li>
             <li>
-              <a href="#">
-                <img src="./appImages/task.png">
-                My Task
-              </a>
+                <a href="mytasks.jsp">
+                    <img src="./appImages/task.png">
+                    My Tasks
+                </a>
             </li>
             <li>
               <a href="projects.jsp">
