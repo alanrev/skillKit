@@ -167,3 +167,33 @@ function GetRecommendedUsersController($scope, $http) {
 
     };
 }
+
+function GetTaskInfoController($scope, $http) {
+
+    $scope.getDataFromServer = function (username, project, id) {
+        $http({
+            method: 'POST',
+            url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
+        }).success(function (data, status, headers, config) {
+            $scope.task = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+function GetTasksController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'GetTasks?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.projects = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
+
