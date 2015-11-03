@@ -74,6 +74,13 @@
   </div>
   </div>
 </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10">
+            <a href="tasks.jsp?project=<%=project%>"><img src=".\appImages\back.png"><strong><%=project%></strong></a>
+        </div>
+    </div>
+</div>
 <div class="container" align="center">
   <% if (user == null){ %>
   <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
@@ -83,66 +90,78 @@
     <div ng-controller="GetTaskInfoController" data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
       <div class="thumbnail">
         <div class="caption">
-          <h3>Task-{{task.id}} {{task.name}}</h3>
-          <p>{{task.description}}</p>
-          <h5>Assign to: {{task.Assign}}</h5>
-          <h5>Main Skill Required: {{task.mainSkill}}</h5>
-          <progress value="{{task.skillrate}}" max="5"></progress> {{task.skillrate}} / 5
-          <h5>Hours:{{task.hours}} hours</h5>
-          <h5>Priority: {{task.priority}}</h5>
-          <h5>Status:{{task.status}}</h5>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Assign To</button>
-
+            <h3>Task-{{task.id}} {{task.name}}</h3>
+            <p>{{task.description}}</p>
+            <h5>Main Skill Required: {{task.mainSkill}}</h5>
+            <progress value="{{task.skillrate}}" max="5"></progress> {{task.skillrate}} / 5
+            <h5>Hours:{{task.hours}} hours</h5>
+            <h5>Priority: {{task.priority}}</h5>
+            <h5>Status:{{task.status}}</h5>
+            <h5>Assign to:</h5>
+            <ul class="list-unstyled">
+              <li ng-repeat=" user in task.assignedUsers" >
+                  <strong>{{user}}</strong>
+              </li>
+            </ul>
+          <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
+            <button type="button" class="btn btn-primary" data-toggle="modal"  id="pm" data-target=".bs-example-modal-lg">Assign To</button>
+          </div>
           <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <h3>Assign Task</h3>
-                <form class="form-control-static" action="AsignTask" method="POST"
-                      ng-controller="#" data-ng-init= "getDataFromServer('<%=user%>')">
-
-                    <input type="hidden"  name="username" id="username" value= <%= user %> />
-                    <input type="hidden"  name="project" id="project" value= <%= project %> />
-
-                          <div class="checkbox">
+                <form class="form-control-static" action="AssignTaskToUser" method="POST"
+                      ng-controller="GetRecommendedUsersController"
+                      data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')"
+                        >
+                    <div class="row">
+                        <input type="hidden"  name="username" id="username" value= <%= user %> />
+                        <input type="hidden"  name="project" id="project" value= <%= project %> />
+                        <input type="hidden"  name="id" id="id" value= <%= id %> />
+                        <h5>Main Skill Required: {{task.mainSkill}}</h5>
+                        <progress value="{{task.skillrate}}" max="5"></progress> {{task.skillrate}} / 5
+                        <h5>Assign to:</h5>
+                        <ul class="list-unstyled">
+                            <li ng-repeat=" user in task.assignedUsers" >
+                                <strong>{{user}}</strong>
+                            </li>
+                        </ul>
+                        <div class="col-xs-6">
+                            <p>Recommended</p>
+                            <div ng-repeat="user in users.UsersFromProject">
                               <label>
-                                  <input type="checkbox" name="languages[]" value="net" /> .Net
+                                  <input type="checkbox" name="users" value="{{user.username}}" />
+                                  <a role="button" data-toggle="collapse" href="#collapse{{$index}}a" aria-expanded="false" aria-controls="collapseExample">
+                                      {{user.firstname}} {{user.lastname}}
+                                  </a>
+                                  <div class="collapse" id="collapse{{$index}}a">
+                                      <div class="well">
+                                          <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
+                                      </div>
+                                  </div>
                               </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="java" /> Java
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="c" /> C/C++
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="php" /> PHP
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="perl" /> Perl
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="ruby" /> Ruby
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="python" /> Python
-                              </label>
-                          </div>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" name="languages[]" value="javascript" /> Javascript
-                              </label>
-                          </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <p>Other Options</p>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="user in users.otherUsers">
+                                    <a role="button" data-toggle="collapse" href="#collapse{{$index}}" aria-expanded="false" aria-controls="collapseExample">
+                                        {{user.firstname}} {{user.lastname}}
+                                    </a>
+                                    <div class="collapse" id="collapse{{$index}}">
+                                        <div class="well">
+                                            <div ng-if="user.currentProject != null">
+                                                <p>Current Project</p>
+                                                <h4>{{user.currentProject}}</h4>
+                                            </div>
+                                            <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Assign Task</button>
 
                 </form>

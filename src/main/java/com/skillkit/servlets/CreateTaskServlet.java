@@ -114,7 +114,9 @@ public class CreateTaskServlet extends HttpServlet {
                node.setProperty(HOURS_KEY, hours);
            }
            node.setProperty(STATUS_KEY, STATUS_CREATED);
-           node.setProperty(ASSIGN, UNASSINGED);
+           String[] userArray = new String[1];
+           userArray[0] = UNASSINGED;
+           node.setProperty(ASSIGNED_USERS, userArray);
            jcrSession.save();
        }catch (RepositoryException re){
            re.printStackTrace();
