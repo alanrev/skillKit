@@ -19,6 +19,8 @@
 %>
 <%String project = request.getParameter("project");%>
 <%String id = request.getParameter("id");%>
+<%String success = request.getParameter("success");%>
+<%String error = request.getParameter("error");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title><%=project%></title>
@@ -82,6 +84,20 @@
     </div>
 </div>
 <div class="container" align="center">
+    <%  if (success != null){
+        if (success.equals("0")) { %>
+    <div class="alert alert-success" role="alert">The task assigned successfully
+    </div><%
+    }}
+    if (error != null){
+
+        if (error.equals("10")) { %>
+    <div class="alert alert-danger" role="alert"><strong>Opps!</strong> can't update status!
+    </div><%
+    }
+    }
+    %>
+
   <% if (user == null){ %>
   <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
 } else { %>

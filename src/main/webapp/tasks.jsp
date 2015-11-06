@@ -133,7 +133,7 @@
                                            required="required">
                                     <textarea class="form-control" rows="3" name="description" required="required"
                                     placeholder="Task Description"></textarea>
-                                    <input type="number" class="form-control" name="hours" placeholder="Hours" required="required">
+                                    <input type="number" class="form-control" name="hours" placeholder="Hours" required="required" min="1" max="160">
                                     <select class="form-control" name="priority">
                                         <option>priority</option>
                                         <option value="High">High</option>
