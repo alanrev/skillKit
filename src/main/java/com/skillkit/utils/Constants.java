@@ -98,4 +98,8 @@ public class Constants {
     public static final String ID = "id";
     public static final String USERS_FROM_PROJECT = "UsersFromProject";
     public static final String OTHER_USERS = "otherUsers";
+    public static final String RETURN_TASK_COUNTER = "returnTaskCounter";
+    public static final String USER = "user";
+    public static final String EVALUATIONS = "evaluations";
+    public static final String EVALUATED = "evaluated";
 }

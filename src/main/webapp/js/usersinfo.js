@@ -147,6 +147,22 @@ function GetTaskInfoController($scope, $http) {
             url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
             $scope.task = data;
+            if ((data.evaluated != null)||(data.status != "Close")){
+                var evaluationForm = document.getElementById("evaluateForm");
+                evaluationForm.style.visibility="hidden";
+                if (data.status == "Close"){
+                    var updateStatus = document.getElementById("updateButton");
+                    var assign  = document.getElementById("pm");
+                    updateStatus.style.visibility = "hidden";
+                    if (assign != null){
+                        assign.style.visibility = "hidden";
+                    }
+                }
+
+            }
+            if (data.resolvedBy != null){
+                $scope.resolvedByLength = data.resolvedBy.length;
+            }
         }).error(function (data, status, headers, config) {
 
         });
@@ -197,20 +213,7 @@ function UpdateStatusController($scope, $http) {
 
 }
 
-function GetTaskInfoController($scope, $http) {
 
-    $scope.getDataFromServer = function (username, project, id) {
-        $http({
-            method: 'POST',
-            url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
-        }).success(function (data, status, headers, config) {
-            $scope.task = data;
-        }).error(function (data, status, headers, config) {
-
-        });
-
-    };
-}
 function GetTasksController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {

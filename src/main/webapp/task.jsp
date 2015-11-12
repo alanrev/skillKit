@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".update-modal-modal-lg">Update Status</button>
+                    <button type="button" id="updateButton" class="btn btn-primary" data-toggle="modal" data-target=".update-modal-modal-lg">Update Status</button>
                 </div>
             </div>
               <div class="modal fade assign-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -216,6 +216,33 @@
                 </div>
             </div>
       </div>
+        <div class="stars" id="evaluateForm">
+            <form class="form-control-static" action="EvaluateTask" method="POST">
+                <input type="hidden"  name="username" id="userE" value= <%= user %> />
+                <input type="hidden"  name="project" id="projE" value= <%= project %> />
+                <input type="hidden"  name="id" id="idTaskE" value= <%= id %> />
+                <div ng-repeat=" user in task.resolvedBy">
+                    <h4>{{user}}</h4>
+                    {{resolvedBySize}}
+                    <div class="row" align="center" style="text-overflow: ellipsis;">
+                        <input type="hidden" name="user{{$index}}" value="{{user}}">
+                        <input type="hidden" name="users" value="{{resolvedByLength}}">
+
+                        <input class="star star-5" id="star-5{{$index}}" type="radio" name="skillrate{{$index}}" value="5"/>
+                        <label class="star star-5" for="star-5{{$index}}"></label>
+                        <input class="star star-4" id="star-4{{$index}}" type="radio" name="skillrate{{$index}}" value="4"/>
+                        <label class="star star-4" for="star-4{{$index}}"></label>
+                        <input class="star star-3" id="star-3{{$index}}" type="radio" name="skillrate{{$index}}" value="3"/>
+                        <label class="star star-3" for="star-3{{$index}}"></label>
+                        <input class="star star-2" id="star-2{{$index}}" type="radio" name="skillrate{{$index}}" value="2"/>
+                        <label class="star star-2" for="star-2{{$index}}"></label>
+                        <input class="star star-1" id="star-1{{$index}}" type="radio" name="skillrate{{$index}}" value="1"/>
+                        <label class="star star-1" for="star-1{{$index}}"></label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Evaluate Task</button>
+            </form>
+        </div>
     </div>
   </div>
 </div>

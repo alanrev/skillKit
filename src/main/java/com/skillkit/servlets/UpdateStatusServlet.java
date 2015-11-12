@@ -54,16 +54,22 @@ public class UpdateStatusServlet extends HttpServlet {
                         if (userNode != null) {
                             if (userNode.hasProperty(ROLE_KEY)) {
                                 String role = userNode.getProperty(ROLE_KEY).getString();
-                                Boolean updateStatus = false;
+                                Boolean updateStatus;
                                 if (role.equals("1")) {
                                     updateStatus = updateStatusByPM(jcrSession, project, tid, status, username);
+                                    if (updateStatus == false){
+                                        error = "10";
+                                    }else{
+                                        error = BLANK;
+                                    }
                                 }
                                 if (role.equals("2")) {
                                     updateStatus = updateStatusByDev(jcrSession, project, tid, status, username);
-                                    System.out.println(updateStatus);
-                                }
-                                if (!updateStatus){
-                                    error = "10";
+                                    if (updateStatus == false){
+                                        error = "10";
+                                    }else{
+                                        error = BLANK;
+                                    }
                                 }
                             }else{
                                 error = "0";
@@ -82,7 +88,6 @@ public class UpdateStatusServlet extends HttpServlet {
             }
             String path = SKILLKIT_HOST_PATH + SLASH + "task.jsp?" + PROJECT + EQUAL_KEY + project +
                     AND + ID + EQUAL_KEY + tid;
-            System.out.println(error);
             if (error.equals(BLANK)) {
                 response.sendRedirect(path);
             }else{
@@ -128,6 +133,16 @@ public class UpdateStatusServlet extends HttpServlet {
                                                                         for (int index = 0; index < resolvedUsers.size(); index++) {
                                                                             String user = resolvedUsers.get(index);
                                                                             rusers[index] = user;
+                                                                        }
+                                                                        if (task.hasProperty(RETURN_TASK_COUNTER)){
+                                                                            String returnedTasksCounter = task.getProperty(RETURN_TASK_COUNTER)
+                                                                                                           .getString();
+                                                                            int rtc = Integer.parseInt(returnedTasksCounter);
+                                                                            rtc++;
+                                                                            task.setProperty(RETURN_TASK_COUNTER, BLANK + rtc);
+                                                                        }else{
+                                                                            task.setProperty(RETURN_TASK_COUNTER, "1");
+
                                                                         }
                                                                         task.setProperty(ASSIGNED_USERS, rusers);
                                                                         Property resolvedBy = task.getProperty(RESOLVED_BY);
@@ -206,33 +221,33 @@ public class UpdateStatusServlet extends HttpServlet {
                                                                     task.setProperty(STATUS_KEY, STATUS_IN_PROGRESS);
                                                                     jcrSession.save();
                                                                     return true;
-                                                                }else{
-                                                                    if (currentStatus.equals(STATUS_IN_PROGRESS)){
-                                                                        return true;
-                                                                    }
-                                                                    if (currentStatus.equals(STATUS_FINISHED)){
-                                                                        if (taskMap.containsKey(RESOLVED_BY)){
-                                                                            if (taskMap.get(RESOLVED_BY)
-                                                                                    instanceof ArrayList){
-                                                                                ArrayList<String> unresolved =  (ArrayList)
-                                                                                        taskMap.get(RESOLVED_BY);
-                                                                                if (unresolved.size() > 0) {
-                                                                                    Property resolvedBy = task.getProperty(RESOLVED_BY);
-                                                                                    resolvedBy.remove();
-                                                                                    String[] usersArray = new String[unresolved.size()];
-                                                                                    for (int index = 0; index < unresolved.size(); index++) {
-                                                                                        String user = unresolved.get(index);
-                                                                                        usersArray[index] = user;
-                                                                                    }
-                                                                                    task.setProperty(ASSIGNED_USERS, usersArray);
-                                                                                    jcrSession.save();
-                                                                                    System.out.println("ok");
-                                                                                    return true;
+                                                                }
+                                                                if (currentStatus.equals(STATUS_IN_PROGRESS)){
+                                                                    return true;
+                                                                }
+                                                                if (currentStatus.equals(STATUS_FINISHED)){
+                                                                    if (taskMap.containsKey(RESOLVED_BY)){
+                                                                        if (taskMap.get(RESOLVED_BY)
+                                                                                instanceof ArrayList){
+                                                                            ArrayList<String> unresolved =  (ArrayList)
+                                                                                    taskMap.get(RESOLVED_BY);
+                                                                            if (unresolved.size() > 0) {
+                                                                                Property resolvedBy = task.getProperty(RESOLVED_BY);
+                                                                                resolvedBy.remove();
+                                                                                String[] usersArray = new String[unresolved.size()];
+                                                                                for (int index = 0; index < unresolved.size(); index++) {
+                                                                                    String user = unresolved.get(index);
+                                                                                    usersArray[index] = user;
                                                                                 }
+                                                                                task.setProperty(ASSIGNED_USERS, usersArray);
+                                                                                jcrSession.save();
+                                                                                System.out.println("ok");
+                                                                                return true;
                                                                             }
                                                                         }
                                                                     }
                                                                 }
+
                                                             }
                                                             if (status.equals("2")) { // status finished
                                                                 if (currentStatus.equals(STATUS_IN_PROGRESS)) {
