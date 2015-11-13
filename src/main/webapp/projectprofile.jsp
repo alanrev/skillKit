@@ -102,7 +102,8 @@
                   </tr>
                   </tbody>
                 </table>
-                <p><a href="tasks.jsp?username=<%=user%>&project=<%=project%>" class="btn btn-primary" role="button">View tasks</a>
+                  <div id="tasksStatus" style="height: 300px; width: 100%;"></div>
+                  <p><a href="tasks.jsp?username=<%=user%>&project=<%=project%>" class="btn btn-primary" role="button">View tasks</a>
               </div>
             </div>
           </div>
@@ -112,6 +113,7 @@
   }
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/usersinfo.js"></script>

@@ -120,7 +120,15 @@ function getProjectInfoController($scope, $http) {
         }).error(function (data, status, headers, config) {
 
         });
+        $http({
+            method: 'POST',
+            url: 'ProjectTasksStatus?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            var chart = new CanvasJS.Chart("tasksStatus", data);
+            chart.render();
+        }).error(function (data, status, headers, config) {
 
+        });
     };
 }
 

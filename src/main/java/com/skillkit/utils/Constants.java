@@ -102,4 +102,21 @@ public class Constants {
     public static final String USER = "user";
     public static final String EVALUATIONS = "evaluations";
     public static final String EVALUATED = "evaluated";
+
+    //canvas
+    public static final String TITLE = "title";
+    public static final String TEXT = "text";
+    public static final String LEGEND = "legend";
+    public static final String MAX_WIDTH = "maxWidth";
+    public static final String ITEM_WIDTH = "itemWidth";
+    public static final String DATA = "data";
+    public static final String TYPE = "type";
+    public static final String PIE = "pie";
+    public static final String SHOW_LEGEND = "showInLegend";
+    public static final String DATA_POINTS = "dataPoints";
+    public static final String LEGEND_TEXT = "legendText";
+    public static final String INDEX_WITH_BRACKETS = "{indexLabel}";
+    public static final String INDEX_LABEL = "indexLabel";
+    public static final String Y_VALUE = "y";
+
 }
