@@ -117,7 +117,7 @@
   <div ng-app="userInfo">
         <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
             <div ng-controller="GetProjectTasksController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
-              <h2><%=project%>'s Task </h2>
+              <h2><a href="projectprofile.jsp?project=<%=project%>"><%=project%>'s Task </a></h2>
                 <button type="button" class="btn btn-primary" data-toggle="modal" id="pm" data-target=".bs-example-modal-lg">New Task</button>
 
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

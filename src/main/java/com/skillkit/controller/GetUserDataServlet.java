@@ -1,10 +1,10 @@
 package com.skillkit.controller;
 
-/**
- * Created by Allan on 12/09/2015.
- */
-import java.io.IOException;
-import java.net.MalformedURLException;
+import com.google.gson.Gson;
+import com.skillkit.model.PersonData;
+import com.skillkit.utils.JCRUtils;
+import com.skillkit.utils.StringValidations;
+import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 
 import javax.jcr.*;
 import javax.servlet.ServletException;
@@ -13,25 +13,21 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.skillkit.model.PersonData;
-import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 import static com.skillkit.utils.Constants.*;
-import static com.skillkit.utils.Constants.DASH;
+import static com.skillkit.utils.Constants.SKILLKIT_USERS_PATH;
 
-@WebServlet(urlPatterns = {"/usersInfo"})
-public class UsersInfoServlet extends HttpServlet {
+@WebServlet("/GetUserData")
+
+public class GetUserDataServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    public UsersInfoServlet() {
-        super();
-    }
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         if ((request != null) && (response != null)) {
+            String user = request.getParameter(USER);
             String username = BLANK;
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -41,30 +37,32 @@ public class UsersInfoServlet extends HttpServlet {
                     }
                 }
             }
+            System.out.println(username);
             String ip = request.getRemoteAddr();
             if ((!(username.isEmpty()))&&(username != null) && (ip != null) && (!(ip.isEmpty()))) {
                 try{
                     Node userNode = authenticate(username, ip);
-                    if (userNode != null) {
+                    Node profileUserNode = getUserNode(user);
+                    if ((userNode != null)&&(profileUserNode != null)) {
                         String firstname = BLANK;
                         String lastname = BLANK;
                         String email = BLANK;
                         String role = BLANK;
                         PersonData personData = new PersonData();
-                        if (userNode.hasProperty(FIRSTNAME_KEY)){
-                            Property firstProperty = userNode.getProperty(FIRSTNAME_KEY);
+                        if (profileUserNode.hasProperty(FIRSTNAME_KEY)){
+                            Property firstProperty = profileUserNode.getProperty(FIRSTNAME_KEY);
                             firstname = firstProperty.getString();
                         }
-                        if (userNode.hasProperty(LASTNAME_KEY)){
-                            Property lastProperty = userNode.getProperty(LASTNAME_KEY);
+                        if (profileUserNode.hasProperty(LASTNAME_KEY)){
+                            Property lastProperty = profileUserNode.getProperty(LASTNAME_KEY);
                             lastname = lastProperty.getString();
                         }
-                        if (userNode.hasProperty(EMAIL_KEY)){
-                            Property mailProperty = userNode.getProperty(EMAIL_KEY);
+                        if (profileUserNode.hasProperty(EMAIL_KEY)){
+                            Property mailProperty = profileUserNode.getProperty(EMAIL_KEY);
                             email = mailProperty.getString();
                         }
-                        if (userNode.hasProperty(ROLE_KEY)){
-                            Property roleProperty = userNode.getProperty(ROLE_KEY);
+                        if (profileUserNode.hasProperty(ROLE_KEY)){
+                            Property roleProperty = profileUserNode.getProperty(ROLE_KEY);
                             role = roleProperty.getString();
                             if (role.equals("1")){
                                 role = PROJECT_MANAGER_ROLE;
@@ -94,6 +92,25 @@ public class UsersInfoServlet extends HttpServlet {
         }
     }
 
+    private Node getUserNode(String user){
+        Node userNode = null;
+        StringValidations sv = new StringValidations();
+        JCRUtils jcrUtils = new JCRUtils();
+        Session jcrSession = jcrUtils.repoLogin();
+        if (jcrSession != null){
+            try{
+                Node root = jcrSession.getRootNode();
+                if ((root != null)&& (sv.validateUsername(user))){
+                    if (root.hasNode(SKILLKIT_USERS_PATH + user)){
+                        userNode = root.getNode(SKILLKIT_USERS_PATH + user);
+                    }
+                }
+            }catch (RepositoryException r){
+                r.printStackTrace();
+            }
+        }
+        return userNode;
+    }
     public Boolean checkSession(String username, String ip, Session jcrSession){
         if ((!(username.isEmpty())) && (!(username.equals(EMPTY_SPACE)))
                 && (!(ip.equals(EMPTY_SPACE))) &&(!(ip.isEmpty()))){

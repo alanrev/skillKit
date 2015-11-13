@@ -25,6 +25,27 @@ function userInfoController($scope, $http) {
     };
 };
 
+function userController($scope, $http) {
+
+    $scope.getDataFromServer = function(username) {
+        $http({
+            method : 'GET',
+            url : 'GetUserData?user='+ username
+        }).success(function(data, status, headers, config) {
+            if (data.role == "Developer"){
+                var createP = document.getElementById('pm');
+                if (createP != null){
+                    createP.style.display = 'none';
+                }
+            }
+            $scope.person = data;
+        }).error(function(data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+
+    };
+};
 function getSkillController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {

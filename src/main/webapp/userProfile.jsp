@@ -1,9 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Allan
-  Date: 16/10/2015
-  Time: 6:17 PM
-  To change this template use File | Settings | File Templates.
+  Date: 13/11/2015
+  Time: 12:04 AM
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
@@ -17,10 +16,10 @@
     }
   }
 %>
-<%String project = request.getParameter("project");%>
+<%String userProfile = request.getParameter("user");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><%=project%></title>
+  <title>My Profile</title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
   <link rel='stylesheet' href='./css/custom.css'>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -61,7 +60,7 @@
               </a>
             </li>
             <li>
-              <a href="LogoutServlet?username=<%= user%>">
+              <a href="LogoutServlet">
                 <img src="./appImages/log_out-48.png">
                 Log Out
               </a>
@@ -72,54 +71,55 @@
     </div>
   </div>
   </div>
-  </nav>
-  <div class="container" align="center">
-    <% if (user == null){ %>
-    <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
-  } else { %>
+</nav>
+<div class="container" align="center">
+  <% if (user == null){ %>
+  <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
+} else {
+  if (userProfile != null){
+      %>
   <%-- Navbar End --%>
-      <div ng-app="userInfo">
-        <div ng-controller="getProjectInfoController" data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>')">
-            <div class="thumbnail">
-              <div class="caption">
-                <h2>{{project.name}}</h2>
-                <p>{{project.projectdescription}}</p>
-                <h3>Project Manager: {{project.projectmanager}}</h3>
-                <h3>Team</h3>
-                <table class="table  table-condensed table-striped">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Email</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="active" ng-repeat = "member in project.team" >
-                        <td><strong> {{member.firstname}} {{member.lastname}}</strong></td>
-                        <td>{{member.role}}</td>
-                        <td>{{member.email}}</td>
-                        <td>
-                            <a href="userProfile.jsp?user={{member.username}}" class="btn btn-primary" role="button">
-                                View Profile
-                            </a>
-                        </td>
-                  </tr>
-                  </tbody>
-                </table>
-                  <div id="tasksStatus" style="height: 300px; width: 100%;"></div>
-                  <p><a href="tasks.jsp?username=<%=user%>&project=<%=project%>" class="btn btn-primary" role="button">View tasks</a>
-              </div>
-            </div>
-          </div>
+  <div ng-app="userInfo">
+    <div ng-controller="userController" data-ng-init= "getDataFromServer('<%=userProfile%>')">
+      <div class="thumbnail">
+        <div class="caption">
+          <h2>{{person.firstName}} {{person.lastName}} </h2>
+          <h4>{{person.role}}</h4>
+          <h4>Contact information</h4>
+          <p>email : {{person.email}}</p>
+        </div>
       </div>
+    </div>
+    <div class="container">
+      <h2>My Skills</h2>
+      <div ng-controller="getSkillController" data-ng-init= "getDataFromServer('<%=userProfile%>')">
+        <table class="table  table-condensed table-striped">
+          <thead>
+          <tr>
+            <th>Skill Name</th>
+            <th>Skill Description</th>
+            <th>Skill Knowledge</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="active" ng-repeat="skill in skillData">
+            <td><strong>{{skill.skillName}}</strong></td>
+            <td><p>{{skill.description}}</p></td>
+            <td>
+              <progress value="{{skill.skillRate}}" max="5"></progress> {{skill.skillRate}} / 5
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+</div>
 <%
+    }
   }
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/canvasjs.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/usersinfo.js"></script>
