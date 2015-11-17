@@ -91,7 +91,32 @@ public class Constants {
     public static final String UNASSINGED = "Unassigned";
     public static final String ASSIGNED_USERS = "assignedUsers";
     public static final String STATUS_CREATED = "Created";
+    public static final String STATUS_IN_PROGRESS = "In Progress";
+    public static final String STATUS_FINISHED = "Finished";
+    public static final String STATUS_CLOSE = "Close";
+    public static final String RESOLVED_BY = "resolvedBy";
     public static final String ID = "id";
     public static final String USERS_FROM_PROJECT = "UsersFromProject";
     public static final String OTHER_USERS = "otherUsers";
+    public static final String RETURN_TASK_COUNTER = "returnTaskCounter";
+    public static final String USER = "user";
+    public static final String EVALUATIONS = "evaluations";
+    public static final String EVALUATED = "evaluated";
+
+    //canvas
+    public static final String TITLE = "title";
+    public static final String TEXT = "text";
+    public static final String LEGEND = "legend";
+    public static final String MAX_WIDTH = "maxWidth";
+    public static final String ITEM_WIDTH = "itemWidth";
+    public static final String DATA = "data";
+    public static final String TYPE = "type";
+    public static final String PIE = "pie";
+    public static final String SHOW_LEGEND = "showInLegend";
+    public static final String DATA_POINTS = "dataPoints";
+    public static final String LEGEND_TEXT = "legendText";
+    public static final String INDEX_WITH_BRACKETS = "{indexLabel}";
+    public static final String INDEX_LABEL = "indexLabel";
+    public static final String Y_VALUE = "y";
+
 }

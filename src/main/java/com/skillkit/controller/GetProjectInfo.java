@@ -85,6 +85,7 @@ public class GetProjectInfo extends HttpServlet {
                                         Node user = root.getNode(SKILLKIT_USERS_PATH + username);
                                         Map<String, Object> map = jcrUtils.getPropertiesFromNode(user);
                                         if (!(map.isEmpty())) {
+                                            map.put(USERNAME_KEY, username);
                                             teammates.add(map);
                                         }
                                     }

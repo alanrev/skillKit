@@ -117,7 +117,7 @@
   <div ng-app="userInfo">
         <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
             <div ng-controller="GetProjectTasksController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
-              <h2><%=project%>'s Task </h2>
+              <h2><a href="projectprofile.jsp?project=<%=project%>"><%=project%>'s Task </a></h2>
                 <button type="button" class="btn btn-primary" data-toggle="modal" id="pm" data-target=".bs-example-modal-lg">New Task</button>
 
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -133,7 +133,7 @@
                                            required="required">
                                     <textarea class="form-control" rows="3" name="description" required="required"
                                     placeholder="Task Description"></textarea>
-                                    <input type="number" class="form-control" name="hours" placeholder="Hours" required="required">
+                                    <input type="number" class="form-control" name="hours" placeholder="Hours" required="required" min="1" max="160">
                                     <select class="form-control" name="priority">
                                         <option>priority</option>
                                         <option value="High">High</option>

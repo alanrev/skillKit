@@ -25,6 +25,27 @@ function userInfoController($scope, $http) {
     };
 };
 
+function userController($scope, $http) {
+
+    $scope.getDataFromServer = function(username) {
+        $http({
+            method : 'GET',
+            url : 'GetUserData?user='+ username
+        }).success(function(data, status, headers, config) {
+            if (data.role == "Developer"){
+                var createP = document.getElementById('pm');
+                if (createP != null){
+                    createP.style.display = 'none';
+                }
+            }
+            $scope.person = data;
+        }).error(function(data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+
+    };
+};
 function getSkillController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {
@@ -120,7 +141,15 @@ function getProjectInfoController($scope, $http) {
         }).error(function (data, status, headers, config) {
 
         });
+        $http({
+            method: 'POST',
+            url: 'ProjectTasksStatus?username=' + username + '&project=' + project
+        }).success(function (data, status, headers, config) {
+            var chart = new CanvasJS.Chart("tasksStatus", data);
+            chart.render();
+        }).error(function (data, status, headers, config) {
 
+        });
     };
 }
 
@@ -147,6 +176,22 @@ function GetTaskInfoController($scope, $http) {
             url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
             $scope.task = data;
+            if ((data.evaluated != null)||(data.status != "Close")){
+                var evaluationForm = document.getElementById("evaluateForm");
+                evaluationForm.style.visibility="hidden";
+                if (data.status == "Close"){
+                    var updateStatus = document.getElementById("updateButton");
+                    var assign  = document.getElementById("pm");
+                    updateStatus.style.visibility = "hidden";
+                    if (assign != null){
+                        assign.style.visibility = "hidden";
+                    }
+                }
+
+            }
+            if (data.resolvedBy != null){
+                $scope.resolvedByLength = data.resolvedBy.length;
+            }
         }).error(function (data, status, headers, config) {
 
         });
@@ -168,20 +213,36 @@ function GetRecommendedUsersController($scope, $http) {
     };
 }
 
-function GetTaskInfoController($scope, $http) {
-
+function UpdateStatusController($scope, $http) {
     $scope.getDataFromServer = function (username, project, id) {
         $http({
             method: 'POST',
             url: 'GetTaskInfo?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
-            $scope.task = data;
+            var task_status = [{"name":"Created","value":"0"}, {"name":"In progress","value":"1"},
+                {"name":"Finished","value":"2"}, {"name":"Close","value":"3"}];
+            var taskStatus = data.status;
+            if (taskStatus != null){
+                for(var index=0; index < task_status.length; index++){
+                    var statusMap = task_status[index];
+                    var name = statusMap["name"];
+                    if (name != null){
+                        if (taskStatus == name){
+                            statusMap["selected"] = "selected";
+                        }
+                    }
+                }
+            }
+            $scope.status = task_status;
         }).error(function (data, status, headers, config) {
 
         });
 
     };
+
 }
+
+
 function GetTasksController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {
