@@ -60,9 +60,7 @@ public class EvaluateTaskServlet extends HttpServlet{
                                         Node task = getTaskNode(project, tid, username, jcrSession);
                                         Map<String, Object> taskMap = jcrUtils.getPropertiesFromNode(task);
                                         if ((task != null) && (userscounterP != null)) {
-                                            System.out.println("entro");
                                             int counter = Integer.parseInt(userscounterP);
-                                            System.out.println(taskMap.toString());
                                             if (!taskMap.isEmpty()){
                                                 if(!taskMap.containsKey(EVALUATED)) {
                                                     if (taskMap.containsKey(MAIN_SKILL)) {

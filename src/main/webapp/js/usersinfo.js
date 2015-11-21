@@ -83,6 +83,9 @@ function getNewRoleSkillController($scope, $http) {
             url: 'GetUserRoleSkills?username=' + username
         }).success(function (data, status, headers, config) {
             $scope.skillData = data;
+            if (data != ""){
+                $scope.skillsSize = data.length;
+            }
         }).error(function (data, status, headers, config) {
 
         });

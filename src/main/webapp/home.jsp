@@ -84,6 +84,8 @@
     <br>
     <h3>  New skills added for your role</h3>
     <div ng-controller="getNewRoleSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
+      <form class="form-control-static" action="AddSkills" method="POST">
+        <input type="hidden" id="skills" name="skills" value="{{skillsSize}}" >
       <table class="table  table-condensed table-striped">
         <thead>
         <tr>
@@ -98,29 +100,28 @@
           <td><p>{{skill.description}}</p></td>
           <td>
             <div class="stars">
-              <form class="form-control-static" action="skillsHandler" method="POST">
                 <div class="row" align="center" style="text-overflow: ellipsis;">
                   <input type="hidden"  name="username" id="username" value= <%= user %> />
-                  <input type="hidden" id="skillname" name="skillname" value ="{{skill.skillName}}">
-                  <input type="hidden" id="skilldescription" name="skilldescription" value="{{skill.description}}" >
-                  <input class="star star-5" id="star-5{{$index}}" type="radio" name="skillrate" value="5"/>
+                  <input type="hidden" id="skillname" name="skillname{{$index}}" value ="{{skill.skillName}}">
+                  <input type="hidden" id="skilldescription" name="skilldescription{{$index}}" value ="{{skill.description}}">
+                  <input class="star star-5" id="star-5{{$index}}" type="radio" name="skillrate{{$index}}" value="5"/>
                   <label class="star star-5" for="star-5{{$index}}"></label>
-                  <input class="star star-4" id="star-4{{$index}}" type="radio" name="skillrate" value="4"/>
+                  <input class="star star-4" id="star-4{{$index}}" type="radio" name="skillrate{{$index}}" value="4"/>
                   <label class="star star-4" for="star-4{{$index}}"></label>
-                  <input class="star star-3" id="star-3{{$index}}" type="radio" name="skillrate" value="3"/>
+                  <input class="star star-3" id="star-3{{$index}}" type="radio" name="skillrate{{$index}}" value="3"/>
                   <label class="star star-3" for="star-3{{$index}}"></label>
-                  <input class="star star-2" id="star-2{{$index}}" type="radio" name="skillrate" value="2"/>
+                  <input class="star star-2" id="star-2{{$index}}" type="radio" name="skillrate{{$index}}" value="2"/>
                   <label class="star star-2" for="star-2{{$index}}"></label>
-                  <input class="star star-1" id="star-1{{$index}}" type="radio" name="skillrate" value="1"/>
+                  <input class="star star-1" id="star-1{{$index}}" type="radio" name="skillrate{{$index}}" value="1"/>
                   <label class="star star-1" for="star-1{{$index}}"></label>
-                  <button type="submit" class="btn btn-primary btn-block">Add Skill</button>
                 </div>
-              </form>
             </div>
           </td>
         </tr>
         </tbody>
       </table>
+      <button type="submit" class="btn btn-primary btn-block">Add Skills</button>
+      </form>
     </div>
 
    </div>
