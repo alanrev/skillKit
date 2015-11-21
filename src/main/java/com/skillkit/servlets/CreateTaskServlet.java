@@ -63,6 +63,7 @@ public class CreateTaskServlet extends HttpServlet {
                                         if (task != null) {
                                             addProperties(name, projectDescription, priority,
                                                     mainSkill, skillRate, hours, task, jcrSession);
+                                            error = BLANK;
                                         } else {
                                             error = "3";
                                         }
