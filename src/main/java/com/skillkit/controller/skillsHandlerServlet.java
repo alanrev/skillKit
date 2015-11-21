@@ -96,6 +96,9 @@ public class skillsHandlerServlet extends HttpServlet {
                                     }else{
                                         Node skill = userSkills.addNode(skillname);
                                         skill.setProperty(SKILL_DESCRIPTION, skillDescription);
+                                        if (skillRate == null){
+                                            skillRate = "0";
+                                        }
                                         skill.setProperty(SKILL_RATE, skillRate);
                                         jcrSession.save();
                                         return userNode;
@@ -104,6 +107,9 @@ public class skillsHandlerServlet extends HttpServlet {
                                     Node userSkills = userNode.addNode(SKILLS_NODE_KEY);
                                     Node skill = userSkills.addNode(skillname);
                                     skill.setProperty(SKILL_DESCRIPTION, skillDescription);
+                                    if (skillRate == null){
+                                        skillRate = "0";
+                                    }
                                     skill.setProperty(SKILL_RATE, skillRate);
                                     jcrSession.save();
                                 }

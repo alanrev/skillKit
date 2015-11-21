@@ -100,6 +100,9 @@ public class AddSkillsServlet extends HttpServlet {
                                         for (int index = 0; index < skillnames.size(); index ++){
                                             String skillname = skillnames.get(index);
                                             String skillrate = skillrates.get(index);
+                                            if (skillrate == null){
+                                                skillrate = "0";
+                                            }
                                             String skilldescription = skilldescriptions.get(index);
                                             if (!skills.hasNode(skillname)){
                                                 Node skill = skills.addNode(skillname);
@@ -116,8 +119,13 @@ public class AddSkillsServlet extends HttpServlet {
                                     for (int index = 0; index < skillnames.size(); index ++){
                                         String skillname = skillnames.get(index);
                                         String skillrate = skillrates.get(index);
+                                        String skilldescription = skilldescriptions.get(index);
+                                        if (skillrate == null){
+                                            skillrate = "0";
+                                        }
                                         Node skill = skills.addNode(skillname);
                                         skill.setProperty(SKILL_RATE, skillrate);
+                                        skill.setProperty(SKILL_DESCRIPTION, skilldescription);
                                         skills.setProperty(EVALUATIONS, 1);
                                         jcrSession.save();
                                         ok = true;
