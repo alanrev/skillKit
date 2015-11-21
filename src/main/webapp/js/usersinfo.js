@@ -222,13 +222,15 @@ function GetRecommendedUsersController($scope, $http) {
             $scope.users = data;
             var recommend = document.getElementById("recommendedUser");
             var all = document.getElementById("allUsers");
-            if(data.UsersFromProject.length == 0){
-                if (recommend != null){
-                    recommend.style.display = "none";
-                }
-            }else{
-                if (all != null){
-                    all.style.display = "none";
+            if (data !="") {
+                if (data.UsersFromProject.length == 0) {
+                    if (recommend != null) {
+                        recommend.style.display = "none";
+                    }
+                } else {
+                    if (all != null) {
+                        all.style.display = "none";
+                    }
                 }
             }
         }).error(function (data, status, headers, config) {
