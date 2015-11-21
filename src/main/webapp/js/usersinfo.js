@@ -220,6 +220,17 @@ function GetRecommendedUsersController($scope, $http) {
             url: 'GetRecommendedUsers?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
             $scope.users = data;
+            var recommend = document.getElementById("recommendedUser");
+            var all = document.getElementById("allUsers");
+            if(data.UsersFromProject.length == 0){
+                if (recommend != null){
+                    recommend.style.display = "none";
+                }
+            }else{
+                if (all != null){
+                    all.style.display = "none";
+                }
+            }
         }).error(function (data, status, headers, config) {
 
         });
