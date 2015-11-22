@@ -120,4 +120,9 @@ public class Constants {
     public static final String INDEX_LABEL = "indexLabel";
     public static final String Y_VALUE = "y";
 
+    //Comments
+
+    public static final String COMMENTS = "comments";
+    public static final String COMMENT = "comment";
+
 }

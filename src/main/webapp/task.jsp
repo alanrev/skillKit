@@ -126,7 +126,10 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="button" id="updateButton" class="btn btn-primary" data-toggle="modal" data-target=".update-modal-modal-lg">Update Status</button>
+                    <button type="button" id="updateButton" class="btn btn-primary" data-toggle="modal" data-target=".update-modal-modal-lg">Update</button>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" id="commentButton" class="btn btn-primary" data-toggle="modal" data-target=".comment-modal-modal-lg">Comment</button>
                 </div>
             </div>
               <div class="modal fade assign-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -232,6 +235,22 @@
                         </div>
                     </div>
                 </div>
+            <div class="modal fade comment-modal-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form class="form-control-static" action="AddComment" method="POST">
+                            <div class="row">
+                                <input type="hidden"  name="username" id="user" value= <%= user %> />
+                                <input type="hidden"  name="project" id="proj" value= <%= project %> />
+                                <input type="hidden"  name="id" id="idTask" value= <%= id %> />
+                                <textarea class="form-control" rows="3" name="comment" required="required"
+                                          placeholder="Comment"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Update Status</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             </div>
       </div>
         <div class="stars" id="evaluateForm">
@@ -262,6 +281,13 @@
             </form>
         </div>
     </div>
+      <div ng-controller="CommentsController"
+           data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
+
+          <div class="alert alert-info" role="alert" ng-repeat="comment in comments">
+              <p> <strong>{{comment.username}}</strong> : {{comment.comment}}</p>
+          </div>
+      </div>
   </div>
 </div>
 <%

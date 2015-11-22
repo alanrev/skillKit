@@ -272,6 +272,20 @@ function UpdateStatusController($scope, $http) {
 
 }
 
+function CommentsController($scope, $http) {
+    $scope.getDataFromServer = function (username, project, id) {
+        $http({
+            method: 'POST',
+            url: 'GetComments?username=' + username + '&project=' + project + '&id=' + id
+        }).success(function (data, status, headers, config) {
+            $scope.comments = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+
+}
 
 function GetTasksController($scope, $http) {
 
