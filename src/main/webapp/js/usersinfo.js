@@ -85,6 +85,9 @@ function getNewRoleSkillController($scope, $http) {
             $scope.skillData = data;
             if (data != ""){
                 $scope.skillsSize = data.length;
+            }else{
+                var hideHtml = document.getElementById("newSkills");
+                hideHtml.style.display = "none";
             }
         }).error(function (data, status, headers, config) {
 
@@ -199,7 +202,9 @@ function GetTaskInfoController($scope, $http) {
                 if (data.status == "Close"){
                     var updateStatus = document.getElementById("updateButton");
                     var assign  = document.getElementById("pm");
+                    var commentButton  = document.getElementById("commentButton");
                     updateStatus.style.visibility = "hidden";
+                    commentButton.style.visibility = "hidden";
                     if (assign != null){
                         assign.style.visibility = "hidden";
                     }
@@ -272,6 +277,20 @@ function UpdateStatusController($scope, $http) {
 
 }
 
+function CommentsController($scope, $http) {
+    $scope.getDataFromServer = function (username, project, id) {
+        $http({
+            method: 'POST',
+            url: 'GetComments?username=' + username + '&project=' + project + '&id=' + id
+        }).success(function (data, status, headers, config) {
+            $scope.comments = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+
+}
 
 function GetTasksController($scope, $http) {
 
