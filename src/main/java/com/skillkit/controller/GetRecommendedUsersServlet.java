@@ -71,6 +71,7 @@ public class GetRecommendedUsersServlet extends HttpServlet {
 
     private Map<String, Object> GetRecommendUsersFromProject(String tid, String project, Session jcrSession){
         Map<String, Object> recommendUsers = new HashMap<>();
+        List<Map<String, Object>> usersFromProject = new ArrayList<>();
         List<Map<String, Object>> recommendUsersFromProject = new ArrayList<>();
         List<Map<String, Object>> recommendUsersFromUsers = new ArrayList<>();
         String mainSkill = BLANK;
@@ -117,6 +118,10 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                                 if (root.hasNode(SKILLKIT_USERS_PATH + name)){
                                     Node user =root.getNode(SKILLKIT_USERS_PATH + name);
                                     if (user != null) {
+                                        Map<String, Object> userMap = jcrUtils
+                                                .getPropertiesFromNode(user);
+                                        userMap.put(USERNAME_KEY, user.getName());
+                                        userMap.put(SKILL_NAME, mainSkill);
                                         if (user.hasNode(SKILLS_NODE_KEY + SLASH + mainSkill)) {
                                             Node mainSkillNode = user.getNode(SKILLS_NODE_KEY + SLASH + mainSkill);
                                             if (mainSkillNode != null){
@@ -126,13 +131,10 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                                                     Double userSkillRate = Double.parseDouble(userSkillRateS);
                                                     recommendUsers.put(SKILLS_NODE_KEY, mainSkill);
                                                     recommendUsers.put(SKILL_RATE, msrate);
+                                                    userMap.put(SKILL_RATE, userSkillRate);
+                                                    usersFromProject.add(userMap);
                                                     if ((userSkillRate > 0.5) && (msrate > 0.5)) {
                                                         if (userSkillRate > msrate - 0.5) {
-                                                            Map<String, Object> userMap = jcrUtils
-                                                                    .getPropertiesFromNode(user);
-                                                            userMap.put(USERNAME_KEY, user.getName());
-                                                            userMap.put(SKILL_NAME, mainSkill);
-                                                            userMap.put(SKILL_RATE, userSkillRate);
                                                             recommendUsersFromProject.add(userMap);
                                                         }
                                                     }
@@ -141,6 +143,9 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                                                     jcrSession.save();
                                                 }
                                             }
+                                        }else{
+                                            userMap.put(SKILL_RATE, 0);
+                                            usersFromProject.add(userMap);
                                         }
                                     }
                                 }
@@ -192,9 +197,7 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                 r.printStackTrace();
             }
         }
-        if (!recommendUsersFromProject.isEmpty()){
-            recommendUsers.put(USERS_FROM_PROJECT, recommendUsersFromProject);
-        }
+        recommendUsers.put(USERS_FROM_PROJECT, recommendUsersFromProject);
         if (!recommendUsersFromUsers.isEmpty()){
             if (!recommendUsersFromProject.isEmpty()){
                 List<Map<String, Object>> usersFromUsersList = recommendUsersFromUsers;
@@ -217,6 +220,7 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                 }
             }
             recommendUsers.put(OTHER_USERS, recommendUsersFromUsers);
+            recommendUsers.put(USERS_KEY, usersFromProject);
         }
         return recommendUsers;
     }

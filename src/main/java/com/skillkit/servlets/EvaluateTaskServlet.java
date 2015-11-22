@@ -60,9 +60,7 @@ public class EvaluateTaskServlet extends HttpServlet{
                                         Node task = getTaskNode(project, tid, username, jcrSession);
                                         Map<String, Object> taskMap = jcrUtils.getPropertiesFromNode(task);
                                         if ((task != null) && (userscounterP != null)) {
-                                            System.out.println("entro");
                                             int counter = Integer.parseInt(userscounterP);
-                                            System.out.println(taskMap.toString());
                                             if (!taskMap.isEmpty()){
                                                 if(!taskMap.containsKey(EVALUATED)) {
                                                     if (taskMap.containsKey(MAIN_SKILL)) {
@@ -175,14 +173,40 @@ public class EvaluateTaskServlet extends HttpServlet{
                                          int evaluations = Integer.parseInt(eva) + 1;
                                          Double newRate =  (rate + sRate) / evaluations;
                                          skillNode.setProperty(SKILL_RATE, BLANK + newRate);
+                                         skillNode.setProperty(EVALUATIONS, evaluations);
                                          jcrSession.save();
                                          isEvaluated = true;
                                      }else{
                                          int evaluations = 2;
                                          Double newRate =  (rate + sRate) / evaluations;
                                          skillNode.setProperty(SKILL_RATE, BLANK + newRate);
+                                         skillNode.setProperty(EVALUATIONS, evaluations);
                                          jcrSession.save();
                                          isEvaluated = true;
+                                     }
+                                 }
+                             }else{
+                                 String usersPath = SKILLKIT_USERS_PATH + user;
+                                 if (root.hasNode(usersPath)){
+                                     Node userNode = root.getNode(usersPath);
+                                     if (userNode != null){
+                                         if (userNode.hasNode(SKILLS_NODE_KEY)){
+                                             Node skills = userNode.getNode(SKILLS_NODE_KEY);
+                                             if (skills != null){
+                                                 Node skill = skills.addNode(skillname);
+                                                 skill.setProperty(SKILL_RATE, skillrate);
+                                                 skill.setProperty(EVALUATIONS, 1);
+                                                 jcrSession.save();
+                                                 isEvaluated = true;
+                                             }
+                                         }else{
+                                             Node skills = userNode.addNode(SKILLS_NODE_KEY);
+                                             Node skill = skills.addNode(skillname);
+                                             skill.setProperty(SKILL_RATE, skillrate);
+                                             skill.setProperty(EVALUATIONS, 1);
+                                             jcrSession.save();
+                                             isEvaluated = true;
+                                         }
                                      }
                                  }
                              }

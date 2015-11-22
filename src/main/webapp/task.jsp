@@ -149,15 +149,33 @@
                                     <strong>{{user}}</strong>
                                 </li>
                             </ul>
-                            <div class="col-xs-6">
-                                <p>Recommended</p>
+                            <div class="col-xs-6" id="recommendedUser">
+                                <p>Recommend</p>
                                 <div ng-repeat="user in users.UsersFromProject">
+                                    <label>
+                                        <input type="checkbox" name="users" value="{{user.username}}" />
+                                        <a role="button" data-toggle="collapse" href="#collapse{{$index}}a" aria-expanded="false" aria-controls="collapseExample">
+                                            {{user.firstname}} {{user.lastname}}
+                                        </a>
+                                        <div class="collapse" id="collapse{{$index}}a">
+                                            <div class="well">
+                                                <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" id="allUsers">
+                                <p>Recommend</p>
+                                <p><strong>Not Found</strong></p>
+                                <p>Team</p>
+                                <div ng-repeat="user in users.users">
                                   <label>
                                       <input type="checkbox" name="users" value="{{user.username}}" />
-                                      <a role="button" data-toggle="collapse" href="#collapse{{$index}}a" aria-expanded="false" aria-controls="collapseExample">
+                                      <a role="button" data-toggle="collapse" href="#collapse{{$index}}b" aria-expanded="false" aria-controls="collapseExample">
                                           {{user.firstname}} {{user.lastname}}
                                       </a>
-                                      <div class="collapse" id="collapse{{$index}}a">
+                                      <div class="collapse" id="collapse{{$index}}b">
                                           <div class="well">
                                               <h5>{{user.skillname}} {{user.skillrate}}/5</h5>
                                           </div>
@@ -165,7 +183,7 @@
                                   </label>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-6" id="otherOptions">
                                 <p>Other Options</p>
                                 <ul class="list-unstyled">
                                     <li ng-repeat="user in users.otherUsers">

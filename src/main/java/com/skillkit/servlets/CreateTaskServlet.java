@@ -57,14 +57,17 @@ public class CreateTaskServlet extends HttpServlet {
                                 Property roleProp = usernode.getProperty(ROLE_KEY);
                                 String role = roleProp.getString();
                                 if (role.equals("1")) {
-                                    Node task = createTask(jcrSession, projectName);
-                                    if (task != null) {
-                                        addProperties(name, projectDescription, priority,
-                                                mainSkill, skillRate, hours, task, jcrSession);
-                                        response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
-                                                EXCLAMATION_MARK + PROJECT  + EQUAL_KEY + projectName
-                                                + "&success=0");
-                                    } else {
+                                    if ((skillRate != null) && (!skillRate.isEmpty()) && (!priority.equals(PRIORITY))
+                                    &&(!mainSkill.equals(MAIN_SKILL_TEXT))) {
+                                        Node task = createTask(jcrSession, projectName);
+                                        if (task != null) {
+                                            addProperties(name, projectDescription, priority,
+                                                    mainSkill, skillRate, hours, task, jcrSession);
+                                            error = BLANK;
+                                        } else {
+                                            error = "3";
+                                        }
+                                    }else{
                                         error = "3";
                                     }
                                 }else{
@@ -84,10 +87,14 @@ public class CreateTaskServlet extends HttpServlet {
                 } else {
                     error = "0";
                 }
+            String path = SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
+                    EXCLAMATION_MARK + PROJECT + EQUAL_KEY + projectName
+                    + "&success=0";
             if (!(error.equals(BLANK))) {
-                response.sendRedirect(SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
-                        EXCLAMATION_MARK + PROJECT  + EQUAL_KEY + projectName + "&error=" + error);
+                path = SKILLKIT_HOST_PATH + SLASH + "tasks.jsp" +
+                        EXCLAMATION_MARK + PROJECT  + EQUAL_KEY + projectName + "&error=" + error;
             }
+            response.sendRedirect(path);
         }
     }
 

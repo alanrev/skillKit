@@ -19,7 +19,7 @@
 <%String userProfile = request.getParameter("user");%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>My Profile</title>
+  <title><%=userProfile%></title>
   <link rel='stylesheet' href='./css/bootstrap.min.css'>
   <link rel='stylesheet' href='./css/custom.css'>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -92,7 +92,7 @@
     </div>
     <div class="container">
       <h2>My Skills</h2>
-      <div ng-controller="getSkillController" data-ng-init= "getDataFromServer('<%=userProfile%>')">
+      <div ng-controller="getProfileSkillsController" data-ng-init= "getDataFromServer('<%=userProfile%>')">
         <table class="table  table-condensed table-striped">
           <thead>
           <tr>

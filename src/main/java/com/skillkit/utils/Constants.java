@@ -102,6 +102,7 @@ public class Constants {
     public static final String USER = "user";
     public static final String EVALUATIONS = "evaluations";
     public static final String EVALUATED = "evaluated";
+    public static final String MAIN_SKILL_TEXT = "Main Skill";
 
     //canvas
     public static final String TITLE = "title";

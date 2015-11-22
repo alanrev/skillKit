@@ -102,12 +102,17 @@ public class GetUsersTasksServlet extends HttpServlet {
                                 if (taskRoot != null){
                                     List<Map<String, Object>> projectTaskList = jcrUtils.getNodeListProperties(taskRoot);
                                     for (Map<String, Object> task : projectTaskList){
-                                        if (task.containsKey(ASSIGNED_USERS)){
-                                            if (task.get(ASSIGNED_USERS) instanceof ArrayList) {
-                                                ArrayList<String> users = (ArrayList) task.get(ASSIGNED_USERS);
-                                                for (String user : users){
-                                                    if (user.equals(username)){
-                                                        taskList.add(task);
+                                        if ((task.containsKey(ASSIGNED_USERS)) && (task.containsKey(STATUS_KEY))){
+                                            if (task.get(STATUS_KEY) instanceof String) {
+                                                String status = (String) task.get(STATUS_KEY);
+                                                if (!status.equals(STATUS_CLOSE)) {
+                                                    if (task.get(ASSIGNED_USERS) instanceof ArrayList) {
+                                                        ArrayList<String> users = (ArrayList) task.get(ASSIGNED_USERS);
+                                                        for (String user : users) {
+                                                            if (user.equals(username)) {
+                                                                taskList.add(task);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }

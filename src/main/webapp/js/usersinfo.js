@@ -61,6 +61,20 @@ function getSkillController($scope, $http) {
     };
 }
 
+function getProfileSkillsController($scope, $http) {
+
+    $scope.getDataFromServer = function (username) {
+        $http({
+            method: 'POST',
+            url: 'GetUserSkill?username=' + username
+        }).success(function (data, status, headers, config) {
+            $scope.skillData = data;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+    };
+}
 function getNewRoleSkillController($scope, $http) {
 
     $scope.getDataFromServer = function (username) {
@@ -69,6 +83,9 @@ function getNewRoleSkillController($scope, $http) {
             url: 'GetUserRoleSkills?username=' + username
         }).success(function (data, status, headers, config) {
             $scope.skillData = data;
+            if (data != ""){
+                $scope.skillsSize = data.length;
+            }
         }).error(function (data, status, headers, config) {
 
         });
@@ -206,6 +223,19 @@ function GetRecommendedUsersController($scope, $http) {
             url: 'GetRecommendedUsers?username=' + username + '&project=' + project + '&id=' + id
         }).success(function (data, status, headers, config) {
             $scope.users = data;
+            var recommend = document.getElementById("recommendedUser");
+            var all = document.getElementById("allUsers");
+            if (data !="") {
+                if (data.UsersFromProject.length == 0) {
+                    if (recommend != null) {
+                        recommend.style.display = "none";
+                    }
+                } else {
+                    if (all != null) {
+                        all.style.display = "none";
+                    }
+                }
+            }
         }).error(function (data, status, headers, config) {
 
         });
