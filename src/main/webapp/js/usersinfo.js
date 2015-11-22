@@ -85,6 +85,9 @@ function getNewRoleSkillController($scope, $http) {
             $scope.skillData = data;
             if (data != ""){
                 $scope.skillsSize = data.length;
+            }else{
+                var hideHtml = document.getElementById("newSkills");
+                hideHtml.style.display = "none";
             }
         }).error(function (data, status, headers, config) {
 
@@ -199,7 +202,9 @@ function GetTaskInfoController($scope, $http) {
                 if (data.status == "Close"){
                     var updateStatus = document.getElementById("updateButton");
                     var assign  = document.getElementById("pm");
+                    var commentButton  = document.getElementById("commentButton");
                     updateStatus.style.visibility = "hidden";
+                    commentButton.style.visibility = "hidden";
                     if (assign != null){
                         assign.style.visibility = "hidden";
                     }

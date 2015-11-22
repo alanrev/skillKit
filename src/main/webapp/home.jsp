@@ -77,53 +77,91 @@
   <% if (user == null){ %>
   <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
   } else { %>
-  <div ng-app="userInfo">
+  <div ng-app="userInfo" ng-cloak>
       <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>')">
         <h2> Welcome {{person.firstName}} {{person.lastName}} </h2>
       </div>
     <br>
-    <h3>  New skills added for your role</h3>
-    <div ng-controller="getNewRoleSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
-      <form class="form-control-static" action="AddSkills" method="POST">
-        <input type="hidden" id="skills" name="skills" value="{{skillsSize}}" >
-      <table class="table  table-condensed table-striped">
-        <thead>
-        <tr>
-          <th>Skill Name</th>
-          <th>Skill Description</th>
-          <th>Skill Knowledge</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="active" ng-repeat="skill in skillData">
-          <td><strong>{{skill.skillName}}</strong></td>
-          <td><p>{{skill.description}}</p></td>
-          <td>
-            <div class="stars">
-                <div class="row" align="center" style="text-overflow: ellipsis;">
-                  <input type="hidden"  name="username" id="username" value= <%= user %> />
-                  <input type="hidden" id="skillname" name="skillname{{$index}}" value ="{{skill.skillName}}">
-                  <input type="hidden" id="skilldescription" name="skilldescription{{$index}}" value ="{{skill.description}}">
-                  <input class="star star-5" id="star-5{{$index}}" type="radio" name="skillrate{{$index}}" value="5"/>
-                  <label class="star star-5" for="star-5{{$index}}"></label>
-                  <input class="star star-4" id="star-4{{$index}}" type="radio" name="skillrate{{$index}}" value="4"/>
-                  <label class="star star-4" for="star-4{{$index}}"></label>
-                  <input class="star star-3" id="star-3{{$index}}" type="radio" name="skillrate{{$index}}" value="3"/>
-                  <label class="star star-3" for="star-3{{$index}}"></label>
-                  <input class="star star-2" id="star-2{{$index}}" type="radio" name="skillrate{{$index}}" value="2"/>
-                  <label class="star star-2" for="star-2{{$index}}"></label>
-                  <input class="star star-1" id="star-1{{$index}}" type="radio" name="skillrate{{$index}}" value="1"/>
-                  <label class="star star-1" for="star-1{{$index}}"></label>
-                </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <button type="submit" class="btn btn-primary btn-block">Add Skills</button>
-      </form>
-    </div>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+              <li data-target="#myCarousel" data-slide-to="3"></li>
+          </ol>
 
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                  <img src="./appImages/logo.png" alt="SkillKit">
+              </div>
+              <div class="item">
+                  <img src="./appImages/dev.png" alt="Software Development">
+              </div>
+              <div class="item">
+                  <img src="./appImages/p.jpg" alt="Project Management">
+              </div>
+
+              <div class="item">
+                  <img src="./appImages/webdesign.jpg" alt="Web Design">
+              </div>
+
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+          </a>
+      </div>
+        <div id="newSkills">
+            <h3>  New skills added for your role</h3>
+            <div ng-controller="getNewRoleSkillController" data-ng-init= "getDataFromServer('<%=user%>')">
+                <form class="form-control-static" action="AddSkills" method="POST">
+                    <input type="hidden" id="skills" name="skills" value="{{skillsSize}}" >
+                    <table class="table  table-condensed table-striped">
+                        <thead>
+                        <tr>
+                            <th>Skill Name</th>
+                            <th>Skill Description</th>
+                            <th>Skill Knowledge</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="active" ng-repeat="skill in skillData">
+                            <td><strong>{{skill.skillName}}</strong></td>
+                            <td><p>{{skill.description}}</p></td>
+                            <td>
+                                <div class="stars">
+                                    <div class="row" align="center" style="text-overflow: ellipsis;">
+                                        <input type="hidden"  name="username" id="username" value= <%= user %> />
+                                        <input type="hidden" id="skillname" name="skillname{{$index}}" value ="{{skill.skillName}}">
+                                        <input type="hidden" id="skilldescription" name="skilldescription{{$index}}" value ="{{skill.description}}">
+                                        <input class="star star-5" id="star-5{{$index}}" type="radio" name="skillrate{{$index}}" value="5"/>
+                                        <label class="star star-5" for="star-5{{$index}}"></label>
+                                        <input class="star star-4" id="star-4{{$index}}" type="radio" name="skillrate{{$index}}" value="4"/>
+                                        <label class="star star-4" for="star-4{{$index}}"></label>
+                                        <input class="star star-3" id="star-3{{$index}}" type="radio" name="skillrate{{$index}}" value="3"/>
+                                        <label class="star star-3" for="star-3{{$index}}"></label>
+                                        <input class="star star-2" id="star-2{{$index}}" type="radio" name="skillrate{{$index}}" value="2"/>
+                                        <label class="star star-2" for="star-2{{$index}}"></label>
+                                        <input class="star star-1" id="star-1{{$index}}" type="radio" name="skillrate{{$index}}" value="1"/>
+                                        <label class="star star-1" for="star-1{{$index}}"></label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary btn-block">Add Skills</button>
+                </form>
+            </div>
+        </div>
    </div>
   <%
     }

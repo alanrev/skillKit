@@ -28,7 +28,7 @@
   <link rel='stylesheet' href='./css/custom.css'>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
-<body>
+<body ng-app="userInfo" ng-cloak>
 <%-- Navbar Start --%>
 <nav class="navbar-wrapper">
   <div class="container">
@@ -102,7 +102,7 @@
   <div class="alert alert-danger" role="alert"><a href="index.jsp" class="alert-link">Please log in</a></div><%
 } else { %>
   <%-- Navbar End --%>
-  <div ng-app="userInfo">
+  <div >
     <div ng-controller="GetTaskInfoController" data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
       <div class="thumbnail">
         <div class="caption">
@@ -121,14 +121,14 @@
             </ul>
             <div class="row">
                 <div ng-controller="userInfoController" data-ng-init= "getDataFromServer('<%=user%>','<%=project%>')">
-                    <div class="col-xs-4">
-                        <button type="button" id="pm" class="btn btn-primary" data-toggle="modal" data-target=".assign-modal-lg">Assign To</button>
+                    <div class="col-xs-3">
+                        <button type="button" id="pm" class="btn btn-primary" data-toggle="modal" data-target=".assign-modal-lg">Assign</button>
                     </div>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <button type="button" id="updateButton" class="btn btn-primary" data-toggle="modal" data-target=".update-modal-modal-lg">Update</button>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <button type="button" id="commentButton" class="btn btn-primary" data-toggle="modal" data-target=".comment-modal-modal-lg">Comment</button>
                 </div>
             </div>
@@ -240,9 +240,9 @@
                     <div class="modal-content">
                         <form class="form-control-static" action="AddComment" method="POST">
                             <div class="row">
-                                <input type="hidden"  name="username" id="user" value= <%= user %> />
-                                <input type="hidden"  name="project" id="proj" value= <%= project %> />
-                                <input type="hidden"  name="id" id="idTask" value= <%= id %> />
+                                <input type="hidden"  name="username" id="userC" value= <%= user %> />
+                                <input type="hidden"  name="project" id="projC" value= <%= project %> />
+                                <input type="hidden"  name="id" id="idTaskC" value= <%= id %> />
                                 <textarea class="form-control" rows="3" name="comment" required="required"
                                           placeholder="Comment"></textarea>
                             </div>
@@ -260,7 +260,6 @@
                 <input type="hidden"  name="id" id="idTaskE" value= <%= id %> />
                 <div ng-repeat=" user in task.resolvedBy">
                     <h4>{{user}}</h4>
-                    {{resolvedBySize}}
                     <div class="row" align="center" style="text-overflow: ellipsis;">
                         <input type="hidden" name="user{{$index}}" value="{{user}}">
                         <input type="hidden" name="users" value="{{resolvedByLength}}">
@@ -281,14 +280,20 @@
             </form>
         </div>
     </div>
-      <div ng-controller="CommentsController"
-           data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
-
-          <div class="alert alert-info" role="alert" ng-repeat="comment in comments">
-              <p> <strong>{{comment.username}}</strong> : {{comment.comment}}</p>
-          </div>
-      </div>
   </div>
+</div>
+<div class="container">
+    <h3>Comments</h3>
+    <div ng-controller="CommentsController"
+         data-ng-init= "getDataFromServer('<%=user%>', '<%=project%>', '<%=id%>')">
+        <ul class="list-unstyled">
+            <li ng-repeat="comment in comments">
+                <div class="alert alert-info" role="alert">
+                    <p> <strong>{{comment.username}}</strong> : {{comment.comment}}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 <%
   }
