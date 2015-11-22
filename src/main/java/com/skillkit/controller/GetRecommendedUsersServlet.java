@@ -219,9 +219,9 @@ public class GetRecommendedUsersServlet extends HttpServlet {
                     }
                 }
             }
-            recommendUsers.put(OTHER_USERS, recommendUsersFromUsers);
-            recommendUsers.put(USERS_KEY, usersFromProject);
         }
+        recommendUsers.put(OTHER_USERS, recommendUsersFromUsers);
+        recommendUsers.put(USERS_KEY, usersFromProject);
         return recommendUsers;
     }
 }
