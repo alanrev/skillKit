@@ -84,7 +84,6 @@
                                 <h4>Contact information</h4>
                                 <p>email : {{person.email}}</p>
                                 <p><a href="newskill.jsp" class="btn btn-primary" role="button">Add Skill</a>
-                                   <a href="#" class="btn btn-default" role="button">Edit Profile</a>
                                 </p>
                             </div>
                         </div>
