@@ -246,7 +246,7 @@
                                 <textarea class="form-control" rows="3" name="comment" required="required"
                                           placeholder="Comment"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Update Status</button>
+                            <button type="submit" class="btn btn-primary btn-block">Comment</button>
                         </form>
                     </div>
                 </div>
